@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 require('./institucion');
 require('./programaAcademico');
-require('./escuela');
 /*
 Modelo estudiante/ Colección estudiantes
 - nombre: primer nombre del estudiantes
@@ -20,7 +19,6 @@ const estudianteSchema = new Schema({
     apellidos: String,
     carnet: Number,
     institucion: {type: mongoose.Schema.Types.ObjectId, ref: 'institucion'},
-    escuela: {type:mongoose.Schema.Types.ObjectId, ref: 'escuela'},
     programaAcademico: {type: mongoose.Schema.Types.ObjectId, ref: 'programaAcademico'},
     usuario: String,
     clave: String,
