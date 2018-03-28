@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+require('./escuela');
 /*
 Modelo materia/ Colección materias
 - nombre: Nombre del programa academico
@@ -10,6 +11,7 @@ Modelo materia/ Colección materias
 var programaAcademicoSchema = new mongoose.Schema({
   nombre: String,
   institucion: mongoose.Schema.Types.ObjectId,
+  escuela: {type:mongoose.Schema.Types.ObjectId, ref: 'escuela'},
   malla: [mongoose.Schema.Types.ObjectId]
 });
 

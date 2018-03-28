@@ -5,7 +5,8 @@ const router = express.Router();
 const ctrlEstudiantes = require('../controllers/estudiante')
 const ctrlProfesores = require('../controllers/profesor')
 const ctrlInsituciones = require('../controllers/institucion')
-const ctrlEscuela = require('../controllers/escuela')
+const ctrlEscuelas = require('../controllers/escuela')
+const ctrlProgramas = require('../controllers/programaAcademico')
 
 //funcion de prueba para saber que api funciona
 router.get('/prueba', function(req, res){
@@ -31,10 +32,14 @@ router.delete('/institucion/:id', ctrlInsituciones.eliminarUnaInsitucionId);
 router.put('/institucion/:id', ctrlInsituciones.modificarUnaInstitucionId);
 
 //escuela
-router.get('/escuelas/:institucion', ctrlEscuela.buscarTodasEscuelas);
-router.get('/escuela/:id', ctrlEscuela.buscarUnaEscuelaId);
-router.post('/escuela/:id', ctrlEscuela.insertarUnaEscuela);
-router.delete('/escuela/:id', ctrlEscuela.eliminarUnaEscuelaId);
-router.put('/escuela/:id', ctrlEscuela.modificarUnaEscuelaId);
+router.get('/escuelas/:institucion', ctrlEscuelas.buscarTodasEscuelas);
+router.get('/escuela/:id', ctrlEscuelas.buscarUnaEscuelaId);
+router.post('/escuela', ctrlEscuelas.insertarUnaEscuela);
+router.delete('/escuela/:id', ctrlEscuelas.eliminarUnaEscuelaId);
+router.put('/escuela/:id', ctrlEscuelas.modificarUnaEscuelaId);
+
+//programaAcademico
+router.get('/programas/:institucion', ctrlProgramas.buscarTodosProgramasAcademicos);
+router.post('/programa', ctrlProgramas.insertarUnProgramaAcademico);
 
 module.exports = router;
