@@ -12,33 +12,6 @@ var sendJsonResponse = function(res, status, content) {
 	res.json(content);
 };
 
-//metodo para buscar un estudiante con un usuario
-module.exports.leerUnEstudianteUsuario = function (req, res) {
-	if(req.params && req.params.usuario){
-    //tiene parametos y usuario
-    //busca un estudiante con ese usuario
-		estudiante
-		    .findOne({
-				"usuario": req.params.usuario
-			})
-      //estudianteRes es el que encuentra
-			.exec(function(err, estudianteRes){
-				if(!estudianteRes){//si no eciste, no lo encontró
-					sendJsonResponse(res, 404,{"message": "Estudiante no encontrado"});
-					return
-				} else if (err){//si ocurre un error, envia el error
-					sendJsonResponse(res,404, err);
-					return;
-				}
-        //encontró el estuante y lo envía en la respuesta
-				sendJsonResponse(res, 200,estudianteRes);
-			});
-		}else{
-      //no se envió un usuario
-			sendJsonResponse(res, 404,{"message": "No hay usuario en la solicitud"});
-		}
-};
-
 //metodo para buscar el ObjectId de una institucion
 function getInstitucionID(Nombre) {
   //busca la institucion por el nombre
@@ -96,7 +69,7 @@ module.exports.insertarUnEstudiante = function(req, res) {
   newEstudiante.apellidos = req.body.apellidos;
 
   //genera un carnet
-  newEstudiante.carnet = 1 //cambiar esto despues
+  newEstudiante.carnet = 1; //cambiar esto despues
 
   //asigna el nombre de institucion en una variable
   var institucion = req.body.institucion;
@@ -140,11 +113,64 @@ module.exports.insertarUnEstudiante = function(req, res) {
           }else{
             //retorna el estudiante salvado
             sendJsonResponse(res, 200, estudiante);
+						console.log("salva en la base de datos");
           }
         })
       })
-      console.log("salva en la base de datos");
     })
   });
-  console.log("termina");
 }
+
+//metodo para buscar un estudiante con un usuario
+module.exports.leerUnEstudianteUsuario = function (req, res) {
+	if(req.params && req.params.usuario){
+    //tiene parametos y usuario
+    //busca un estudiante con ese usuario
+		estudiante
+		    .findOne({
+				"usuario": req.params.usuario
+			})
+      //estudianteRes es el que encuentra
+			.exec(function(err, estudianteRes){
+				if(!estudianteRes){//si no existe, no lo encontró
+					sendJsonResponse(res, 404,{"message": "Estudiante no encontrado"});
+					return
+				} else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+        //encontró el estudiante y lo envía en la respuesta
+				sendJsonResponse(res, 200,estudianteRes);
+			});
+		}else{
+      //no se envió un usuario
+			sendJsonResponse(res, 404,{"message": "No hay usuario en la solicitud"});
+		}
+};
+/*
+//metodo para modificar estudiante
+module.exports.modificarUnEstudianteId = funcion(req, res){
+	if(req.params && req.params.id){
+    //tiene parametos y id
+    //busca un estudiante con ese usuario
+
+		estudiante
+			.findById(req.params.id)
+			.exec(function(err, estudianteRes){
+				if(!estudianteRes){//si no existe, no lo encontró
+					sendJsonResponse(res, 404,{"message": "Estudiante no encontrado"});
+					return
+				}else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+        //encontró el estudiante y lo envía en la respuesta
+				sendJsonResponse(res, 200,estudianteRes);
+			});
+		}else{
+      //no se envió un usuario
+			sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+			})
+
+	}
+}*/
