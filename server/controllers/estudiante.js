@@ -121,59 +121,8 @@ module.exports.insertarUnEstudiante = function(req, res){
 			})
 		})
 	})
-
 }
-/*
-module.exports.insertarUnEstudiante = function(req, res) {
-  console.log('Insertar Estudiante');
 
-  //crea una instancia del modelo estudiante
-  var newEstudiante = new estudiante();
-
-  //le asigna nombre y apellidos sin ningun cambio
-  newEstudiante.nombre = req.body.nombre;
-  newEstudiante.apellidos = req.body.apellidos;
-
-  //genera un carnet
-  newEstudiante.carnet = 1; //cambiar esto despues
-
-  //asigna el nombre de institucion en una variable
-  var institucion = req.body.institucion;
-  //crea un query para recuperar el ObjectId
-  var query = getInstitucionID(institucion);
-  //ejecuta el query
-  query.exec(function(err, institucionRes) {
-    if (err){
-      console.log(err);
-      return;
-    }
-    //asigna el ObjectId
-    newEstudiante.institucion = institucionRes._id;
-    //asigna el nombre de la escuela a una variable
-  var programaAcademico = req.body.programaAcademico;
-    //crea un query para recuperar el ObjectId
-    var query2 = getProgramaAcademicoID(programaAcademico, institucionRes._id);
-    //ejecuta el query
-    query2.exec(function(err, programaRes){
-      if(err)
-        return console.log(err);
-      //asigna el ObjectId
-      newEstudiante.programaAcademico = programaRes._id;
-      newEstudiante.usuario = req.body.usuario;
-      newEstudiante.clave = req.body.clave;
-      //salva el estudiante en la base de datos
-      newEstudiante.save(function(err, estudiante) {
-        if (err) {
-          console.log('Error insertando estudante \n' + err);
-        }else{
-          //retorna el estudiante salvado
-          sendJsonResponse(res, 200, estudiante);
-					console.log("salva en la base de datos");
-        }
-      })
-    })
-  });
-}*/
 
 //metodo para buscar un estudiante con un usuario
 module.exports.leerUnEstudianteUsuario = function (req, res) {
@@ -186,6 +135,7 @@ module.exports.leerUnEstudianteUsuario = function (req, res) {
 			})
 			.populate('institucion')
 			.populate('programaAcademico')
+			.populate('escuela')
       //estudianteRes es el que encuentra
 			.exec(function(err, estudianteRes){
 				if(!estudianteRes){//si no existe, no lo encontró
