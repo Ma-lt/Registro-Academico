@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+require('./institucion');
+require('./programaAcademico');
+
 /*
 Modelo estudiante/ Colección estudiantes
 - nombre: primer nombre del estudiantes
@@ -16,8 +19,8 @@ const estudianteSchema = new Schema({
     nombre: String,
     apellidos: String,
     carnet: Number,
-    institucion: mongoose.Schema.Types.ObjectId,
-    programaAcademico: mongoose.Schema.Types.ObjectId,
+    institucion: {type: mongoose.Schema.Types.ObjectId, ref: 'institucion'},
+    programaAcademico: {type: mongoose.Schema.Types.ObjectId, ref: 'programaAcademico'},
     usuario: String,
     clave: String,
 });

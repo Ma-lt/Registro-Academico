@@ -15,7 +15,7 @@ router.get('/prueba', function(req, res){
 //estudiante
 router.get('/estudiante/:usuario', ctrlEstudiantes.leerUnEstudianteUsuario);
 router.post('/estudiante', ctrlEstudiantes.insertarUnEstudiante);
-//router.put('/estudiante/:id', ctrlEstudiantes.modificarUnEstudianteId);
+router.put('/estudiante/:id', ctrlEstudiantes.modificarUnEstudianteId);
 
 //Profesor
 router.get('/profesor/:usuario', ctrlProfesores.leerUnProfesorUsuario);
