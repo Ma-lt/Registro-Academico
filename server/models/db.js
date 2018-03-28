@@ -5,10 +5,10 @@ require('./escuela');
 require('./estudiante');
 require('./foro');
 require('./grupo');
-//require('./institucion');
+require('./institucion');
 require('./materia');
 require('./profesor');
-//require('./programaAcademico');
+require('./programaAcademico');
 
 const dbURI = 'mongodb://localhost/SRA';
 mongoose.Promise = global.Promise;

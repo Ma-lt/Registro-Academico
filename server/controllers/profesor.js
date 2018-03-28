@@ -137,9 +137,12 @@ module.exports.leerUnProfesorUsuario = function (req, res) {
     //tiene parametos y usuario
     //busca un profesor con ese usuario
 		profesor
-		    .findOne({
+		  .findOne({
 				"usuario": req.params.usuario
 			})
+			.populate('institucion')
+			.populate('escuela')
+			.populate('grupo')
       //estudianteRes es el que encuentra
 			.exec(function(err, profesorRes){
 				if(!profesorRes){//si no existe, no lo encontró

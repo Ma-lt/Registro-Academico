@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+require('./institucion');
+require('./escuela');
+require('./grupo');
 /*
 Modelo profesor/ Colección profesores
 - nombre: primer nombre del profesor
@@ -17,11 +20,11 @@ const profesorSchema = new Schema({
     nombre: String,
     apellidos: String,
     carnet: Number,
-    institucion: mongoose.Schema.Types.ObjectId,
-    escuela: mongoose.Schema.Types.ObjectId,
+    institucion: {type: mongoose.Schema.Types.ObjectId, ref: 'institucion'},
+    escuela: {type:mongoose.Schema.Types.ObjectId, ref: 'escuela'},
     usuario: String,
     clave: String,
-    grupos: [mongoose.Schema.Types.ObjectId]
+    grupos: [{type: mongoose.Schema.Types.ObjectId, ref:'grupo'}]
 });
 
 module.exports = mongoose.model('profesor',profesorSchema,'profesores');
