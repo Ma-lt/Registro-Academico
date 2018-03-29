@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+require('./institucion');
 /*
 Modelo materia/ Colección materias
 - nombre: Nombre de la materia
@@ -8,7 +9,7 @@ Modelo materia/ Colección materias
 
 var materiaSchema = new mongoose.Schema({
   nombre: String,
-  institucion: mongoose.Schema.Types.ObjectId
+  institucion: {type: mongoose.Schema.Types.ObjectId,ref: 'institucion'}
 });
 
 module.exports = mongoose.model('materia', materiaSchema, 'materias');
