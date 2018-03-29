@@ -46,6 +46,7 @@ function insertarInstitucion(Nombre){
     }else{
       console.log('Institucion nueva insertada')
       return institucion._id;
+      console.log(institucion._id)
     }
   })
 }
@@ -57,7 +58,7 @@ function insertarEscuela(Nombre){
     if(err){
       console.log('Error insertando la escuela \n' + err);
     }else{
-      console.log('Institucion nueva insertada')
+      console.log('Escuela nueva insertada')
       return escuela._id;
     }
   })
