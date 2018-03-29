@@ -24,6 +24,7 @@ router.put('/estudiante/:id', ctrlEstudiantes.modificarUnEstudianteId);
 //Profesor
 router.get('/profesor/:usuario', ctrlProfesores.leerUnProfesorUsuario);
 router.post('/profesor', ctrlProfesores.insertarUnProfesor);
+router.put('/profesor/:id', ctrlProfesores.modificarUnProfesorId);
 
 //Institucion
 router.get('/institucion/:id', ctrlInsituciones.buscarInstitucionId);
