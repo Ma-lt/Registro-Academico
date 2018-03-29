@@ -49,7 +49,9 @@ router.put('/programa/:id', ctrlProgramas.eliminarUnProgramaAcademicoId);
 
 //materia
 router.get('/materias/:institucion', ctrlMaterias.buscarTodasMaterias);
-
+router.get('/materia/:id', ctrlMaterias.buscarUnaMateriaId);
 router.post('/materia', ctrlMaterias.insertarUnaMateria);
+router.delete('/materia/:id', ctrlMaterias.eliminarUnaMateriaId);
+router.put('/materia/:id', ctrlMaterias.modificarUnaMateriaId);
 
 module.exports = router;
