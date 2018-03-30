@@ -27,8 +27,7 @@
         <br>
         <p>No tiene cuenta?</p>
         
-        <p><a href="#" onclick="document.getElementById('modalEstudiante').style.display='block'"
->Registro de estudiantes</a></p>
+        <p><a href="#" onclick="document.getElementById('modalEstudiante').style.display='block'" (click) = "getInstituciones($event)" >Registro de estudiantes</a></p>
         <p><a h href="#" onclick="document.getElementById('modalProfesor').style.display='block'" (click) = "getInstituciones($event)" >Registro de profesores</a></p>
     </div>
   </div>
@@ -51,25 +50,19 @@
         <p>
         <select class="w3-select" name="option" name="institucion" ngModel >
             <option value="" disabled selected>Institucion</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
+            <option value={{i._id}} *ngFor="let i of instituciones">{{i.nombre}}</option>
         </select>
         </p>
         <p>
-        <select class="w3-select" name="escuela" ngModel>
+        <select class="w3-select" (change)="onSelectEscuela($event.target.value)" name="escuela" ngModel>
             <option value="" disabled selected>Escuela</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
+            <option value="{{e._id}}" *ngFor="let e of escuelas">{{e.nombre}}</option>
         </select>
         </p>
             <p>
         <select class="w3-select" name="programaAcademico" ngModel>
             <option value="" disabled selected>Programa Académico</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
+            <option value="{{p._id}}" *ngFor="let p of programasAcademicos">{{p.nombre}}</option>
         </select>
         </p>
         <input class="w3-input" type="text" placeholder="Usuario" name="usuario" ngModel>
@@ -101,9 +94,9 @@
 
         <input class="w3-input" type="text" placeholder="Apellidos" name="apellidos" ngModel>
         <p>
-        <select class="w3-select" name="institucion" ngModel>
+        <select class="w3-select" (change)="onSelectInstitucion($event.target.value)" name="institucion" ngModel>
             <option value="" disabled selected>Institucion</option>
-            <option value={{i.nombre}} *ngFor="let i of instituciones">{{i.nombre}}</option>
+            <option value={{i._id}} *ngFor="let i of instituciones">{{i.nombre}}</option>
         </select>
         </p>
         <p>
@@ -112,9 +105,7 @@
         <p>
         <select class="w3-select" name="escuela" ngModel>
             <option value="" disabled selected>Escuela</option>
-            <option value="Computacion">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
+            <option value="{{e._id}}" *ngFor="let e of escuelas">{{e.nombre}}</option>
         </select>
         </p>
         <p>
