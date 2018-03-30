@@ -1,0 +1,134 @@
+<div class="w3-display-middle w3-padding w3-col l6 m8">
+    <div class="w3-container w3-red">
+      <h2><i class="fa fa-bed w3-margin-right"></i>Inicio de Sesión</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
+        <form  #loginForm="ngForm" (ngSubmit)="onSubmit()" class="w3-container">
+
+        <input class="w3-input" type="text" placeholder="Usuario" name="usuario" ngModel>
+
+        <input class="w3-input" type="text" placeholder="Constraseña" name="clave" ngModel>
+
+        <br>
+
+        <p>
+        <input class="w3-radio" type="radio" name="tipo" value="estudiante" checked>
+        <label>Estudiante</label>
+        </p>
+
+        <p>
+        <input class="w3-radio" type="radio" name="tipo" value="profesor">
+        <label>Profesor</label>
+
+        <input type="submit" class="w3-btn w3-red w3-right" value="Iniciar Sesión" >
+        </p>
+        </form>
+
+        <br>
+        <p>No tiene cuenta?</p>
+        
+        <p><a href="#" onclick="document.getElementById('modalEstudiante').style.display='block'"
+>Registro de estudiantes</a></p>
+        <p><a h href="#" onclick="document.getElementById('modalProfesor').style.display='block'" (click) = "getInstituciones($event)" >Registro de profesores</a></p>
+    </div>
+  </div>
+
+<!-- The Modal -->
+<div id="modalEstudiante" class="w3-modal">
+  <div class="w3-modal-content">
+    <div class="w3-container w3-red">
+      <span onclick="document.getElementById('modalEstudiante').style.display='none'"
+      class="w3-button w3-display-topright">&times;</span>
+
+          <h2><i class="fa fa-bed w3-margin-right"></i>Registro de estudiantes</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
+        <form  #estudianteForm="ngForm" (ngSubmit)="onSubmitRegistroEstudiante(estudianteForm.value)" class="w3-container">
+
+        <input class="w3-input" type="text" placeholder="Nombre" name="nombre" ngModel>
+
+        <input class="w3-input" type="text" placeholder="Apellidos" name="apellidos" ngModel>
+        <p>
+        <select class="w3-select" name="option" name="institucion" ngModel >
+            <option value="" disabled selected>Institucion</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+        </select>
+        </p>
+        <p>
+        <select class="w3-select" name="escuela" ngModel>
+            <option value="" disabled selected>Escuela</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+        </select>
+        </p>
+            <p>
+        <select class="w3-select" name="programaAcademico" ngModel>
+            <option value="" disabled selected>Programa Académico</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+        </select>
+        </p>
+        <input class="w3-input" type="text" placeholder="Usuario" name="usuario" ngModel>
+
+        <input class="w3-input" type="text" placeholder="Contraseña" name="clave" ngModel>
+
+        <p>
+        <input type="submit" class="w3-btn w3-red w3-right" value="Registrarse">
+        </p>
+ 
+        </form>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div id="modalProfesor" class="w3-modal">
+  <div class="w3-modal-content">
+    <div class="w3-container w3-red">
+        <span onclick="document.getElementById('modalProfesor').style.display='none'"
+      class="w3-button w3-display-topright">&times;</span>
+
+      <h2><i class="fa fa-bed w3-margin-right"></i>Registro de profesores</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
+        <form  #profesorForm="ngForm" (ngSubmit)="onSubmitRegistroProfesor(profesorForm.value)" class="w3-container">
+
+        <input class="w3-input" type="text" placeholder="Nombre" name="nombre" ngModel>
+
+        <input class="w3-input" type="text" placeholder="Apellidos" name="apellidos" ngModel>
+        <p>
+        <select class="w3-select" name="institucion" ngModel>
+            <option value="" disabled selected>Institucion</option>
+            <option value={{i.nombre}} *ngFor="let i of instituciones">{{i.nombre}}</option>
+        </select>
+        </p>
+        <p>
+        <input class="w3-input" type="text" placeholder="Otra" name="institucion" ngModel>
+        </p>
+        <p>
+        <select class="w3-select" name="escuela" ngModel>
+            <option value="" disabled selected>Escuela</option>
+            <option value="Computacion">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+        </select>
+        </p>
+        <p>
+        <input class="w3-input" type="text" placeholder="Otra" name="escuela" ngModel>
+        </p>
+        <input class="w3-input" type="text" placeholder="Usuario" name="usuario" ngModel>
+
+        <input class="w3-input" type="text" placeholder="Constraseña" name="clave" ngModel>
+
+        <p>
+        <input type="submit" class="w3-btn w3-red w3-right" value="Registrarse" >
+        </p>
+ 
+        </form>
+    </div>
+  </div>
+</div>
