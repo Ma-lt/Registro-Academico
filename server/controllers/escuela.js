@@ -31,13 +31,14 @@ module.exports.buscarTodasEscuelas = function(req,res){
     }
 }
 
-//metodo para buscar una escuela por nombre e institucion
+//metodo para buscar una escuela por id
 module.exports.buscarUnaEscuelaId = function(req, res){
   if(req.params && req.params.id){
     //tiene parametos y id
     //busca una escuela con ese id
     escuela
       .findById(req.params.id)
+			.populate('institucion')
       .exec(function(err, escuelaRes){
         if(!escuelaRes){//si no existe, no lo encontró
           sendJsonResponse(res, 404,{"message": "Escuela no encontrada"});
@@ -76,7 +77,7 @@ module.exports.insertarUnaEscuela = function(req, res) {
   })
 }
 
-//metodo para borrar una escuela on ObjectId
+//metodo para borrar una escuela con ObjectId
 module.exports.eliminarUnaEscuelaId = function(req, res){
   if(req.params && req.params.id){
     //tiene parametos y id

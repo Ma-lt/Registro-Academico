@@ -7,6 +7,7 @@ const ctrlProfesores = require('../controllers/profesor')
 const ctrlInsituciones = require('../controllers/institucion')
 const ctrlEscuelas = require('../controllers/escuela')
 const ctrlProgramas = require('../controllers/programaAcademico')
+const ctrlMaterias = require('../controllers/materia')
 
 //funcion de prueba para saber que api funciona
 router.get('/prueba', function(req, res){
@@ -23,6 +24,7 @@ router.put('/estudiante/:id', ctrlEstudiantes.modificarUnEstudianteId);
 //Profesor
 router.get('/profesor/:usuario', ctrlProfesores.leerUnProfesorUsuario);
 router.post('/profesor', ctrlProfesores.insertarUnProfesor);
+router.put('/profesor/:id', ctrlProfesores.modificarUnProfesorId);
 
 //Institucion
 router.get('/institucion/:id', ctrlInsituciones.buscarInstitucionId);
@@ -40,6 +42,16 @@ router.put('/escuela/:id', ctrlEscuelas.modificarUnaEscuelaId);
 
 //programaAcademico
 router.get('/programas/:institucion', ctrlProgramas.buscarTodosProgramasAcademicos);
+router.get('/programa/:id', ctrlProgramas.buscarUnProgramaAcademicoId);
 router.post('/programa', ctrlProgramas.insertarUnProgramaAcademico);
+router.delete('/programa/:id', ctrlProgramas.eliminarUnProgramaAcademicoId);
+router.put('/programa/:id', ctrlProgramas.eliminarUnProgramaAcademicoId);
+
+//materia
+router.get('/materias/:institucion', ctrlMaterias.buscarTodasMaterias);
+router.get('/materia/:id', ctrlMaterias.buscarUnaMateriaId);
+router.post('/materia', ctrlMaterias.insertarUnaMateria);
+router.delete('/materia/:id', ctrlMaterias.eliminarUnaMateriaId);
+router.put('/materia/:id', ctrlMaterias.modificarUnaMateriaId);
 
 module.exports = router;

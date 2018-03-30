@@ -49,6 +49,33 @@ module.exports.buscarTodosProgramasAcademicos = function(req,res){
     }
 }
 
+//metodo para buscar un programa academico por id
+module.exports.buscarUnProgramaAcademicoId = function(req, res){
+  if(req.params && req.params.id){
+    //tiene parametos y id
+    //busca un programa academico con ese id
+    programaAcademico
+      .findById(req.params.id)
+			.populate('institucion')
+			.populate('escuela')
+			.populate('materia')
+      .exec(function(err, programaRes){
+        if(!programaRes){//si no existe, no lo encontró
+          sendJsonResponse(res, 404,{"message": "Programa Academico no encontrado"});
+					return
+        }else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+        //encontró el programa academico y lo envía en la respuesta
+				sendJsonResponse(res, 200,programaRes);
+      })
+  }else{
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+  }
+}
+
+
 //metodo para insertar un programaAcademico
 //recibe el objectId de institucion
 module.exports.insertarUnProgramaAcademico = function(req, res) {
@@ -81,4 +108,61 @@ module.exports.insertarUnProgramaAcademico = function(req, res) {
       }
     })
   })
+}
+
+//metodo para borrar un programaAcademico con ObjectId
+module.exports.eliminarUnProgramaAcademicoId = function(req, res){
+  if(req.params && req.params.id){
+    //tiene parametos y id
+    //busca un programa academico con ese id
+    programaAcademico
+      .remove({"_id": req.params.id})
+      .exec(function(err, programaRes){
+        if(!programaRes){//si no existe, no lo encontró
+          sendJsonResponse(res, 404,{"message": "Programa academico no encontrado"});
+					return
+        }else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+        sendJsonResponse(res, 200,{"message": "Programa academico eliminado"});
+      })
+  }
+}
+
+//metodo para modificar un programa academico con ObjectId
+//aqui solo se puede cambiar el nombre
+module.exports.modificarUnProgramaAcademicoId = function(req, res){
+  if(req.params && req.params.id){
+    //tiene parametos y id
+    //busca un programa academico con ese id
+    programaAcademico
+      .findById(req.params.id)
+      .exec(function(err, programaRes){
+        if(!programaRes){//si no existe, no lo encontró
+					sendJsonResponse(res, 404,{"message": "Programa no encontrado"});
+					return
+				}else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+
+        //realiza las modificaciones
+				//asigna nombre sin ningun cambio
+				programaRes.nombre = req.body.nombre;
+
+        programaRes.save(function(err, programa){
+          if(err){
+            console.log('Error modificando programa \n' + err);
+          }else{
+            //retorna el escuela salvada
+            sendJsonResponse(res, 200, programa);
+            console.log("salva en la base de datos");
+          }
+        })
+      })
+  }else{
+    //no se envió un id
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+  }
 }

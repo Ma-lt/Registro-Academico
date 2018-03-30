@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+require('./institucion');
 /*
 Modelo escuela/ Colección escuelas
 - nombre: nombre de la escuela
@@ -8,7 +9,7 @@ Modelo escuela/ Colección escuelas
 
 var escuelaSchema = new mongoose.Schema({
   nombre: String,
-  institucion: mongoose.Schema.Types.ObjectId
+  institucion: {type: mongoose.Schema.Types.ObjectId,ref: 'institucion'}
 });
 
 module.exports = mongoose.model('escuela', escuelaSchema, 'escuelas');

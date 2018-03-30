@@ -46,6 +46,7 @@ function insertarInstitucion(Nombre){
     }else{
       console.log('Institucion nueva insertada')
       return institucion._id;
+      console.log(institucion._id)
     }
   })
 }
@@ -57,7 +58,7 @@ function insertarEscuela(Nombre){
     if(err){
       console.log('Error insertando la escuela \n' + err);
     }else{
-      console.log('Institucion nueva insertada')
+      console.log('Escuela nueva insertada')
       return escuela._id;
     }
   })
@@ -131,7 +132,87 @@ module.exports.insertarUnProfesor = function(req, res) {
   });
 }
 
-//metodo para buscar un estudiante con un usuario
+module.exports.modificarUnProfesorId = function(req,res) {
+  console.log("Modificar profesor ")
+  if(req.params && req.params.id){
+    //tiene parametos y id
+    //busca un profesor con ese usuario
+
+    profesor
+      .findById(req.params.id)
+      .exec(function(err, profesorRes){
+        if(!profesorRes){//si no existe, no lo encontró
+          sendJsonResponse(res, 404,{"message": "Profesor no encontrado"});
+          return
+        }else if (err){//si ocurre un error, envia el error
+          sendJsonResponse(res,404, err);
+          return;
+        }
+
+        //realiza las modificaciones
+        //asigna nombre y apellido sin ningun cambio
+        profesorRes.nombre = req.body.nombre;
+        profesorRes.apellidos = req.body.apellidos;
+
+        //asigna el nombre de institucion en una variable
+        var institucion = req.body.institucion;
+        //crea un query para recuperar el ObjectId
+        var query = getInstitucionID(institucion);
+        //ejecuta el query
+        query.exec(function(err, institucionRes) {
+          if (err){
+            console.log(err);
+            return;
+          }
+          //asigna el ObjectId
+          if(institucionRes == null){
+          //si no existe la institucion
+          //se crea
+            profesorRes.institucion = insertarInstitucion(institucion);
+          }else{
+          //asigna el ObjectId
+            profesorRes.escuela = escuelaRes._id;
+          }
+          var escuela = req.body.escuela;
+          //crea un query para recuperar el ObjectId
+          var query2 = getEscuelaID(escuela, profesorRes.institucion);
+          //ejecuta el query
+          query2.exec(function(err, escuelaRes){
+            if(err)
+              return console.log(err);
+            if(escuelaRes == null){
+              //si no existe la escuela
+              profesorRes.escuela =  insertarEscuela(escuela);
+            }else{
+              //asigna el ObjectId
+              profesorRes.escuela = escuelaRes._id;
+            }
+            //asigna usuario y clave sin ningun cambio
+            profesorRes.usuario = req.body.usuario;
+            profesorRes.clave = req.body.clave;
+            //salva el profesor en la base de datos
+            profesorRes.save(function(err, profesor) {
+              if (err) {
+                console.log('Error modificando profesor \n' + err);
+              }else{
+                //retorna el profesor salvado
+                sendJsonResponse(res, 200, profesor);
+                console.log("salva en la base de datos");
+             }
+      })
+    })
+  });
+});
+  }else{
+    //no se envió un usuario
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+  }
+}
+
+//5abc5d45feb810530c1bd755
+
+
+//metodo para buscar un profesonr con un usuario
 module.exports.leerUnProfesorUsuario = function (req, res) {
 	if(req.params && req.params.usuario){
     //tiene parametos y usuario
@@ -143,7 +224,7 @@ module.exports.leerUnProfesorUsuario = function (req, res) {
 			.populate('institucion')
 			.populate('escuela')
 			.populate('grupo')
-      //estudianteRes es el que encuentra
+      //profesorRes es el que encuentra
 			.exec(function(err, profesorRes){
 				if(!profesorRes){//si no existe, no lo encontró
 					sendJsonResponse(res, 404,{"message": "Profesor no encontrado"});

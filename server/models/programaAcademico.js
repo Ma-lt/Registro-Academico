@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 
 require('./escuela');
+require('./institucion');
+require('./materia');
 /*
 Modelo materia/ Colección materias
 - nombre: Nombre del programa academico
@@ -10,9 +12,9 @@ Modelo materia/ Colección materias
 
 var programaAcademicoSchema = new mongoose.Schema({
   nombre: String,
-  institucion: mongoose.Schema.Types.ObjectId,
+  institucion: {type: mongoose.Schema.Types.ObjectId,ref: 'institucion'},
   escuela: {type:mongoose.Schema.Types.ObjectId, ref: 'escuela'},
-  malla: [mongoose.Schema.Types.ObjectId]
+  malla: [{type: mongoose.Schema.Types.ObjectId, ref: 'materia'}]
 });
 
 module.exports = mongoose.model('programaAcademico', programaAcademicoSchema, 'programasAcademicos');
