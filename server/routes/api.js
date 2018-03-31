@@ -41,11 +41,12 @@ router.delete('/escuela/:id', ctrlEscuelas.eliminarUnaEscuelaId);
 router.put('/escuela/:id', ctrlEscuelas.modificarUnaEscuelaId);
 
 //programaAcademico
-router.get('/programas/:institucion', ctrlProgramas.buscarTodosProgramasAcademicos);
+router.get('/programas/:institucion/:escuela', ctrlProgramas.buscarTodosProgramasAcademicos);
 router.get('/programa/:id', ctrlProgramas.buscarUnProgramaAcademicoId);
 router.post('/programa', ctrlProgramas.insertarUnProgramaAcademico);
 router.delete('/programa/:id', ctrlProgramas.eliminarUnProgramaAcademicoId);
 router.put('/programa/:id', ctrlProgramas.eliminarUnProgramaAcademicoId);
+router.put('/programa-mat/:id', ctrlProgramas.agregarMateriaPlanAcademico);
 
 //materia
 router.get('/materias/:institucion', ctrlMaterias.buscarTodasMaterias);
@@ -54,4 +55,6 @@ router.post('/materia', ctrlMaterias.insertarUnaMateria);
 router.delete('/materia/:id', ctrlMaterias.eliminarUnaMateriaId);
 router.put('/materia/:id', ctrlMaterias.modificarUnaMateriaId);
 
+
+//exporta el api
 module.exports = router;

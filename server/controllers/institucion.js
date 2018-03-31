@@ -9,6 +9,16 @@ var sendJsonResponse = function(res, status, content) {
 	res.json(content);
 };
 
+//metodo para buscar el ObjectId de una institucion
+function getInstitucionID(Nombre) {
+  //busca la institucion por el nombre
+  var query = institucion.findOne({
+    'nombre': Nombre
+  })
+  console.log("getInstitucionID")
+  return query;
+}
+
 //metodo para buscar todas las instituciones
 module.exports.buscarTodasInstituciones = function(req,res){
   institucion
@@ -29,7 +39,7 @@ module.exports.buscarTodasInstituciones = function(req,res){
 module.exports.insertarUnaInstitucion = function(req, res) {
   console.log('Insertar Institucion');
 
-  //crea una instancia del modelo estudiante
+  //crea una instancia del modelo institucion
   var newInstitucion = new institucion();
 
   //le asigna nombre sin ningun cambio
@@ -40,6 +50,45 @@ module.exports.insertarUnaInstitucion = function(req, res) {
       console.log('Error insertando institucion \n' + err);
     }else{
       //retorna el estudiante salvado
+      sendJsonResponse(res, 200, institucion);
+      console.log("salva en la base de datos");
+    }
+  })
+}
+
+//metodo para insertar una institucion si no existe
+module.exports.insertarUnaInstitucionSiNoExiste = function(req, res) {
+  console.log('Insertar Institucion si no existe');
+
+	//se fija si la institucion existe
+
+	//crea un query para recuperar el ObjectId
+  var query = getInstitucionID(req.body.nombre);
+
+	//ejecuta el query
+  query.exec(function(err, institucionRes) {
+		if (err){
+      console.log(err);
+      return;
+    }
+		if(institucionRes != null){
+			sendJsonResponse(res, 200, {"message": "Institucion ya existe"});
+			return
+		}
+	})
+	//la institucion no existe, entonces la inserta
+
+  //crea una instancia del modelo institucion
+  var newInstitucion = new institucion();
+
+  //le asigna nombre sin ningun cambio
+  newInstitucion.nombre = req.body.nombre;
+
+  newInstitucion.save(function(err, institucion){
+    if (err) {
+      console.log('Error insertando institucion \n' + err);
+    }else{
+      //retorna la institucion salvada
       sendJsonResponse(res, 200, institucion);
       console.log("salva en la base de datos");
     }

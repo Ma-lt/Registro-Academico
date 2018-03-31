@@ -9,6 +9,22 @@ var sendJsonResponse = function(res, status, content) {
 	res.json(content);
 };
 
+//metodo para buscar el ObjectId de una escuela
+//Institucion es un ObjectId
+function getEscuelaID(Nombre, Institucion) {
+  //busca la escuela por el nombre y la institucion
+  var query = escuela.findOne({
+    'nombre': Nombre,
+    'institucion' : Institucion
+  }, function(err, programaRes) {
+    if (err){
+      return handleError(err);
+    }
+  })
+
+  return query;
+}
+
 //metodo para buscar todas las escuelas de una institucion
 module.exports.buscarTodasEscuelas = function(req,res){
   if(req.params && req.params.institucion){
@@ -71,6 +87,46 @@ module.exports.insertarUnaEscuela = function(req, res) {
       console.log('Error insertando escuela \n' + err);
     }else{
       //retorna el estudiante salvado
+      sendJsonResponse(res, 200, escuela);
+      console.log("salva en la base de datos");
+    }
+  })
+}
+
+//metodo para insertar una escuela si no existe
+module.exports.insertarUnaEscuelaSiNoExiste = function(req, res) {
+  console.log('Insertar Escuela si no existe');
+
+	//se fija si la escuela existe
+
+	//crea un query para recuperar el ObjectId
+  var query = getEscuelaID(req.body.nombre);
+
+	//ejecuta el query
+  query.exec(function(err, escuelaRes) {
+		if (err){
+      console.log(err);
+      return;
+    }
+		if(escuelaRes != null){
+			sendJsonResponse(res, 200, {"message": "Escuela ya existe"});
+			return
+		}
+	})
+	//la institucion no existe, entonces la inserta
+
+  //crea una instancia del modelo institucion
+  var newEscuela = new escuela();
+
+	//le asigna nombre sin ningun cambio
+  newEscuela.nombre = req.body.nombre;
+  newEscuela.institucion = req.body.institucion;
+
+  newEscuela.save(function(err, escuela){
+    if (err) {
+      console.log('Error insertando escuela \n' + err);
+    }else{
+      //retorna la escuela salvada
       sendJsonResponse(res, 200, escuela);
       console.log("salva en la base de datos");
     }

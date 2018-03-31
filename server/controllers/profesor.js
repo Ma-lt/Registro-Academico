@@ -91,14 +91,8 @@ module.exports.insertarUnProfesor = function(req, res) {
       console.log(err);
       return;
     }
-    if(institucionRes == null){
-      //si no existe la institucion
-      //se crea
-      newProfesor.institucion = insertarInstitucion(institucion);
-    }else{
     //asigna el ObjectId
     newProfesor.institucion = institucionRes._id;
-    }
     //asigna el nombre de la escuela a una variable
     var escuela = req.body.escuela;
     //crea un query para recuperar el ObjectId
@@ -107,14 +101,8 @@ module.exports.insertarUnProfesor = function(req, res) {
     query2.exec(function(err, escuelaRes){
       if(err)
         return console.log(err);
-      if(escuelaRes == null){
-        //si no existe la escuela
-        //se ctrlEstudiantes
-        newProfesor.escuela =  insertarEscuela(escuela);
-      }else{
-        //asigna el ObjectId
-        newProfesor.escuela = escuelaRes._id;
-      }
+      //asigna el ObjectId
+      newProfesor.escuela = escuelaRes._id;
       //asigna usuario y clave sin ningun cambio
       newProfesor.usuario = req.body.usuario;
       newProfesor.clave = req.body.clave;

@@ -29,10 +29,11 @@ function getEscuelaID(Nombre, Institucion) {
 //metodo para buscar todos los programas academicos de una institucion
 //recibe el id de la institucion
 module.exports.buscarTodosProgramasAcademicos = function(req,res){
-  if(req.params && req.params.institucion){
+  if(req.params && req.params.institucion && req.params.escuela){
     programaAcademico
       .find({
-        "institucion": req.params.institucion
+        "institucion": req.params.institucion,
+				"escuela": req.params.escuela
       })
       .exec(function(err, programas){
   				if(!programas){
@@ -45,7 +46,7 @@ module.exports.buscarTodosProgramasAcademicos = function(req,res){
   				sendJsonResponse(res, 200,programas);
   			});
     }else{
-      sendJsonResponse(res, 404,{"message": "No hay institucion en la solicitud"});
+      sendJsonResponse(res, 404,{"message": "No hay institucion o escuela en la solicitud"});
     }
 }
 
@@ -165,4 +166,39 @@ module.exports.modificarUnProgramaAcademicoId = function(req, res){
     //no se envió un id
     sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
   }
+}
+
+//metodo para agregar una materia al ProgramaAcademico
+//recibe el id de la materia
+module.exports.agregarMateriaPlanAcademico = function(req, res){
+	if(req.params && req.params.id){
+		//tiene parametos y id
+    //busca un programa academico con ese id
+    programaAcademico
+      .findById(req.params.id)
+			.exec(function(err, programaRes){
+				if(!programaRes){//si no existe, no lo encontró
+					sendJsonResponse(res, 404,{"message": "Programa no encontrado"});
+					return
+				}else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+
+				//agrega la materia
+				programaRes.malla.push(req.body.materia);
+				programaRes.save(function(err, programa){
+          if(err){
+            console.log('Error modificando programa \n' + err);
+          }else{
+            //retorna el escuela salvada
+            sendJsonResponse(res, 200, programa);
+            console.log("salva en la base de datos");
+          }
+        })
+			})
+	}else{
+		//no se envió un id
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+	}
 }
