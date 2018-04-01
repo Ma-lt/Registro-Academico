@@ -8,6 +8,8 @@ const ctrlInsituciones = require('../controllers/institucion')
 const ctrlEscuelas = require('../controllers/escuela')
 const ctrlProgramas = require('../controllers/programaAcademico')
 const ctrlMaterias = require('../controllers/materia')
+const ctrlCursos = require('../controllers/curso')
+const ctrlGrupos = require('../controllers/grupo')
 
 //funcion de prueba para saber que api funciona
 router.get('/prueba', function(req, res){
@@ -46,7 +48,8 @@ router.get('/programa/:id', ctrlProgramas.buscarUnProgramaAcademicoId);
 router.post('/programa', ctrlProgramas.insertarUnProgramaAcademico);
 router.delete('/programa/:id', ctrlProgramas.eliminarUnProgramaAcademicoId);
 router.put('/programa/:id', ctrlProgramas.eliminarUnProgramaAcademicoId);
-router.put('/programa-mat/:id', ctrlProgramas.agregarMateriaPlanAcademico);
+router.put('/programa-agM/:id', ctrlProgramas.agregarMateriaPlanAcademico);
+router.put('/programa-elM/:id', ctrlProgramas.eliminarMateriaPlanAcademico);
 
 //materia
 router.get('/materias/:institucion', ctrlMaterias.buscarTodasMaterias);
@@ -55,6 +58,19 @@ router.post('/materia', ctrlMaterias.insertarUnaMateria);
 router.delete('/materia/:id', ctrlMaterias.eliminarUnaMateriaId);
 router.put('/materia/:id', ctrlMaterias.modificarUnaMateriaId);
 
+//cursos
+router.get('/cursos/:institucion', ctrlCursos.buscarTodosCursos);
+router.get('/curso/:id', ctrlCursos.buscarUnCursoId);
+router.post('/curso', ctrlCursos.insertarUnCurso);
+router.delete('/curso/:id', ctrlCursos.eliminarUnCursoId);
+router.put('/materia/:id', ctrlCursos.modificarUnCursoId);
+
+//grupos
+
+router.get('/grupo/:id', ctrlGrupos.buscarUnGrupoId);
+router.post('/grupo', ctrlGrupos.insertarUnGrupo);
+router.delete('/grupo/:id', ctrlGrupos.eliminarUnGrupoId);
+router.put('/grupo/:id', ctrlGrupos.modificarUnGrupoId);
 
 //exporta el api
 module.exports = router;

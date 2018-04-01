@@ -202,3 +202,37 @@ module.exports.agregarMateriaPlanAcademico = function(req, res){
     sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
 	}
 }
+
+//metodo para borrar una materia al ProgramaAcademico
+//recibe el id de la materia
+module.exports.eliminarMateriaPlanAcademico = function(req, res){
+	if(req.params && req.params.id){
+		//tiene parametos y id
+    //busca un programa academico con ese id
+    programaAcademico
+      .findById(req.params.id)
+			.exec(function(err, programaRes){
+				if(!programaRes){//si no existe, no lo encontró
+					sendJsonResponse(res, 404,{"message": "Programa no encontrado"});
+					return
+				}else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+
+				programaRes.malla.remove(req.body.materia);
+				programaRes.save(function(err, programa){
+          if(err){
+            console.log('Error modificando programa \n' + err);
+          }else{
+            //retorna el escuela salvada
+            sendJsonResponse(res, 200, programa);
+            console.log("salva en la base de datos");
+          }
+        })
+			})
+	}else{
+		//no se envió un id
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+	}
+}

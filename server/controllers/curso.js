@@ -8,57 +8,138 @@ var curso = mongoose.model('curso');
 //metodo para enviar respuesta
 var sendJsonResponse = function(res, status, content) {
 	res.status(status);
-	res.j
+	res.json(content);
+};
 
-
-
-function getMateria(nombre) {
-	var query = materia.findOne({
-		'nombre': Nombre
-	})
-	console.log('get Materia');
-	return query;
+//metodo para buscar todas las materias de una institucion
+module.exports.buscarTodosCursos = function(req,res){
+  if(req.params && req.params.institucion){
+    curso
+      .find({})
+			.populate({
+				path: 'materia',
+				match: {
+					institucion: req.params.institucion
+				}
+			})
+      .exec(function(err, cursos){
+  				if(!cursos){
+  					sendJsonResponse(res, 404,{"message": "Cursos no encontradas"});
+  					return
+  				} else if (err){
+  					sendJsonResponse(res,404, err);
+  					return;
+  				}
+  				sendJsonResponse(res, 200,cursos);
+  			});
+    }else{
+      sendJsonResponse(res, 404,{"message": "No hay institucion en la solicitud"});
+    }
 }
 
+//metodo para buscar un curso por id
+module.exports.buscarUnCursoId = function(req, res){
+  if(req.params && req.params.id){
+    //tiene parametos y id
+    //busca un curso con ese id
+    curso
+      .findById(req.params.id)
+			.populate('materia')
+			.populate('grupo')
+      .exec(function(err, cursoRes){
+        if(!cursoRes){//si no existe, no lo encontró
+          sendJsonResponse(res, 404,{"message": "Curso no encontrado"});
+					return
+        }else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+        //encontró la materia y la envía en la respuesta
+				sendJsonResponse(res, 200,cursoRes);
+      })
+  }else{
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+  }
+}
 
-module.exports.imsertarCurso = function(req,res) {
-	//crea una nuea instancia de modelo curso
-	var newCurso = new curso();
+//metodo para insertar un curso
+//recibe el objectId de materia
+module.exports.insertarUnCurso = function(req, res) {
+  console.log('Insertar Curso');
 
-	//le asigna semestre y anho
+  //crea una instancia del modelo curso
+  var newCurso = new curso();
+
+	//le asigna semestre, año y materia
 	newCurso.semestre = parseInt(req.body.semestre);
 	newCurso.año = parseInt(req.body.año);
+	newCurso.materia = req.body.materia;
 
-	//crea un query para recuperar el ObjectId
-  var query = getMateria(req.body.materia);
-  query.exec(function(err, materiaRes) {
-  	if(err)
-        return console.log(err);
-    else {
-    	newCurso.materia = materiaRes._id
-    }
-
-  });	
-
-}
-
-
-module.exports.insertarUnaMateria = function(req, res) {
-  console.log('Insertar Materia');
-
-  //crea una instancia del modelo estudiante
-  var newMateria = new materia();
-
-  //le asigna nombre sin ningun cambio
-  newMateria.nombre = req.body.nombre;
-  newMateria.institucion = req.body.institucion;
-  newMateria.save(function(err, materia){
+  newCurso.save(function(err, curso){
     if (err) {
-      console.log('Error insertando materia \n' + err);
+      console.log('Error insertando curso \n' + err);
     }else{
       //retorna el estudiante salvado
-      sendJsonResponse(res, 200, materia);
+      sendJsonResponse(res, 200, curso);
       console.log("salva en la base de datos");
     }
   })
+}
+
+//metodo para borrar un curso con ObjectId
+module.exports.eliminarUnCursoId = function(req, res){
+  if(req.params && req.params.id){
+    //tiene parametos y id
+    //busca un curso con ese id
+    curso
+      .remove({"_id": req.params.id})
+      .exec(function(err, cursoRes){
+        if(!cursoRes){//si no existe, no lo encontró
+          sendJsonResponse(res, 404,{"message": "Curso no encontrado"});
+					return
+        }else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+        sendJsonResponse(res, 200,{"message": "Curso eliminada"});
+      })
+  }
+}
+
+//metodo para modificar un curso con ObjectId
+module.exports.modificarUnCursoId = function(req, res){
+  if(req.params && req.params.id){
+    //tiene parametos y id
+    //busca un curso con ese id
+    curso
+      .findById(req.params.id)
+      .exec(function(err, cursoRes){
+        if(!cursoRes){//si no existe, no lo encontró
+					sendJsonResponse(res, 404,{"message": "Curso no encontrada"});
+					return
+				}else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+
+        //realiza las modificaciones
+
+				cursoRes.semestre = parseInt(req.body.semestre);
+				cursoRes.año = parseInt(req.body.año);
+				cursoRes.materia = req.body.materia;
+
+        cursoRes.save(function(err, curso){
+          if(err){
+            console.log('Error modificando curso \n' + err);
+          }else{
+            //retorna el materia salvada
+            sendJsonResponse(res, 200, curso);
+            console.log("salva en la base de datos");
+          }
+        })
+      })
+  }else{
+    //no se envió un id
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+  }
 }

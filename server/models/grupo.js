@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 
+require('./curso');
+require('./estudiante');
 /*
 Modelo grupo/ Colección grupos
 - curso: ObjectId del curso al que pertenece
@@ -13,14 +15,14 @@ Modelo grupo/ Colección grupos
 */
 
 var grupoSchema = new mongoose.Schema({
-  curso: mongoose.Schema.Types.ObjectId,
+  curso: {type: mongoose.Schema.Types.ObjectId,ref: 'curso'},
   numero: Number,
-  estudiantes: [mongoose.Schema.Types.ObjectId],
+  estudiantes: [{type: mongoose.Schema.Types.ObjectId,ref: 'estudiante'}],
   asistencia: [
       {fecha: Date,
        estudiantes: [
             {
-                    estudiante:mongoose.Schema.Types.ObjectId,
+                    estudiante:{type: mongoose.Schema.Types.ObjectId,ref: 'estudiante'},
                     presente: Boolean
             }
            ]

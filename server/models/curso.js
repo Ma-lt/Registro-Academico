@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 
+require('./materia');
+require('./grupo');
 /*
 Modelo cuso/ Colección cursos
 - materia: ObjectId de la materia del curso
@@ -9,8 +11,8 @@ Modelo cuso/ Colección cursos
 */
 
     var cursoSchema = new mongoose.Schema({
-      materia: mongoose.Schema.Types.ObjectId,
-      grupos: [mongoose.Schema.Types.ObjectId],
+      materia: {type: mongoose.Schema.Types.ObjectId,ref: 'materia'},
+      grupos: [{type: mongoose.Schema.Types.ObjectId,ref: 'grupo'}],
       semestre: Number,
       año: Number
     });
