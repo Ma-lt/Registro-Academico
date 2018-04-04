@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
     /*llama el metodo addProfesor del serivicio
      * pasandole el profesor que obtiene desde
      * la interfaz*/
+     console.log(profesor);
      this.registerService.addProfesor(profesor)
      .subscribe();
   }
@@ -57,5 +58,12 @@ export class LoginComponent implements OnInit {
 
   onSelectEscuela(idEscuela: string){
       this.registerService.getProgramasAcademicos(idEscuela, this.idInstitucion).subscribe(data=> this.programasAcademicos = data); //mapea los datos recibidos a la lista de programas
+  }
+
+  onSubmitLogin(usuario){
+      console.log(usuario.tipo);
+      //if usuario.tipo = estudiante
+      //    loginEstudiante(usuario.usuario, usuario.contraseña)
+      //    /api/estudiante/:usr/:contraseña
   }
 }

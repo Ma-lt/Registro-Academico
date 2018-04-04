@@ -3,7 +3,7 @@
       <h2><i class="fa fa-bed w3-margin-right"></i>Inicio de Sesión</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">
-        <form  #loginForm="ngForm" (ngSubmit)="onSubmit()" class="w3-container">
+        <form  #loginForm="ngForm" (ngSubmit)="onSubmitLogin(loginForm.value)" class="w3-container">
 
         <input class="w3-input" type="text" placeholder="Usuario" name="usuario" ngModel>
 
@@ -12,12 +12,12 @@
         <br>
 
         <p>
-        <input class="w3-radio" type="radio" name="tipo" value="estudiante" checked>
+        <input class="w3-radio" type="radio" name="tipo" value="estudiante" checked ngModel> 
         <label>Estudiante</label>
         </p>
 
         <p>
-        <input class="w3-radio" type="radio" name="tipo" value="profesor">
+        <input class="w3-radio" type="radio" name="tipo" value="profesor" ngModel>
         <label>Profesor</label>
 
         <input type="submit" class="w3-btn w3-red w3-right" value="Iniciar Sesión" >
