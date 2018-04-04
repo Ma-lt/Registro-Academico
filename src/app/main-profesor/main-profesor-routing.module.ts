@@ -9,7 +9,7 @@ import { AdminMateriaComponent } from '../admin-materia/admin-materia.component'
 import { AdminProgramaComponent } from '../admin-programa/admin-programa.component';
 
 const mainProfesorRoutes: Routes = [
-    { path: 'profesor/:id', component: MainProfesorComponent,
+    { path: 'profesor/:usr', component: MainProfesorComponent,
       children: [
           { path: 'adminInstitucion', component: AdminInstitucionComponent },
           { path: 'adminCurso', component: AdminCursoComponent },         

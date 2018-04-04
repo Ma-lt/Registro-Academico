@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitLogin(usuario){
-      console.log(usuario);
       let radios = document.getElementsByName('tipo') as NodeListOf<HTMLInputElement>;
 
       for (var i = 0, length = radios.length; i < length; i++)
@@ -88,7 +87,7 @@ export class LoginComponent implements OnInit {
       }else{
           this.loginService.getProfesor(usuario.usuario).subscribe(data =>{
               if(data.clave == usuario.clave){
-                  this.router.navigate(['/profesor/'+data._id]);  
+                  this.router.navigate(['/profesor/'+data.usuario]);  
               }else{
                   alert('Usuario o contraseña invalidos')
               };

@@ -1,18 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AdminInstitucionService } from '../admin-institucion.service';
+import { Profesor } from '../models/profesor';
+import { Institucion } from '../models/institucion';
 
 @Component({
   selector: 'app-admin-institucion',
   templateUrl: './admin-institucion.component.html',
   styleUrls: ['./admin-institucion.component.css'],
+  providers: [AdminInstitucionService]
 })
 export class AdminInstitucionComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private adminService: AdminInstitucionService, private route: ActivatedRoute, private router: Router) { }
+
+  private profesor: Profesor;
+  private instituciones: Array<Institucion>;
 
   ngOnInit() {
-      let id = this.route.snapshot.parent.paramMap.get('id');
-      console.log(id);
+      let usr = this.route.snapshot.parent.paramMap.get('usr');
+      this.adminService.getProfesor(usr).subscribe( data => this.profesor = data );
+      this.adminService.getInstituciones();
   }
 
 }

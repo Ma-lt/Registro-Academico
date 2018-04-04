@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-main-profesor',
@@ -8,14 +6,10 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./main-profesor.component.css'],
 })
 export class MainProfesorComponent implements OnInit {
-  
-  id: any;
-  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-
-  }
+  }  
+  constructor() { }
 
   w3_open() {
     document.getElementById("main").style.marginLeft = "25%";
