@@ -5,13 +5,16 @@ import 'rxjs/add/operator/switchMap';
 @Component({
   selector: 'app-main-profesor',
   templateUrl: './main-profesor.component.html',
-  styleUrls: ['./main-profesor.component.css']
+  styleUrls: ['./main-profesor.component.css'],
 })
 export class MainProfesorComponent implements OnInit {
-
-  constructor() { }
+  
+  id: any;
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+
   }
 
   w3_open() {
