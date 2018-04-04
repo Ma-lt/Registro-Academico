@@ -1,4 +1,5 @@
 <div class="w3-display-middle w3-padding w3-col l6 m8">
+    <base href="/login">
     <div class="w3-container w3-red">
       <h2><i class="fa fa-bed w3-margin-right"></i>Inicio de Sesión</h2>
     </div>
@@ -12,12 +13,12 @@
         <br>
 
         <p>
-        <input class="w3-radio" type="radio" name="tipo" value="estudiante" checked ngModel> 
+        <input type="radio"  class="w3-radio" name="tipo" value="estudiante"> 
         <label>Estudiante</label>
         </p>
 
         <p>
-        <input class="w3-radio" type="radio" name="tipo" value="profesor" ngModel>
+        <input class="w3-radio" type="radio" name="tipo" value="profesor">
         <label>Profesor</label>
 
         <input type="submit" class="w3-btn w3-red w3-right" value="Iniciar Sesión" >
@@ -27,8 +28,8 @@
         <br>
         <p>No tiene cuenta?</p>
         
-        <p><a href="#" onclick="document.getElementById('modalEstudiante').style.display='block'" (click) = "getInstituciones($event)" >Registro de estudiantes</a></p>
-        <p><a h href="#" onclick="document.getElementById('modalProfesor').style.display='block'" (click) = "getInstituciones($event)" >Registro de profesores</a></p>
+        <p><button class="w3-button" onclick="document.getElementById('modalEstudiante').style.display='block'" (click) = "getInstituciones($event)" >Registro de estudiantes</button></p>
+        <p><button class="w3-button" onclick="document.getElementById('modalProfesor').style.display='block'" (click) = "getInstituciones($event)" >Registro de profesores</button></p>
     </div>
   </div>
 

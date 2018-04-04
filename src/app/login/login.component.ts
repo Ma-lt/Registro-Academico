@@ -5,23 +5,24 @@ import { Institucion } from '../models/institucion';
 import { Escuela } from '../models/escuela';
 import { ProgramaAcademico } from '../models/programaAcademico';
 import { RegisterService } from '../register.service';
+import { LoginService } from '../login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [RegisterService] //en este array se deben insertar los servicios que utiliza el componente
+  providers: [RegisterService, LoginService] //en este array se deben insertar los servicios que utiliza el componente
 }
 )
 export class LoginComponent implements OnInit {
 
-    constructor(private registerService: RegisterService) { } //aqui se hace la inyeccion del servicio
+    constructor(private router: Router, private registerService: RegisterService, private loginService: LoginService) { } //aqui se hace la inyeccion del servicio
 
   //declaraciones de las variables que se usan desde la interfaz HTML para desplegar las opciones del select
   private instituciones: Array<Institucion>;
   private escuelas: Array<Escuela>;
   private programasAcademicos: Array<ProgramaAcademico>;
-
   private idInstitucion: string;
 
   ngOnInit() {
@@ -61,9 +62,38 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitLogin(usuario){
-      console.log(usuario.tipo);
-      //if usuario.tipo = estudiante
-      //    loginEstudiante(usuario.usuario, usuario.contraseña)
-      //    /api/estudiante/:usr/:contraseña
+      console.log(usuario);
+      let radios = document.getElementsByName('tipo') as NodeListOf<HTMLInputElement>;
+
+      for (var i = 0, length = radios.length; i < length; i++)
+      {
+       if (radios[i].checked)
+       {
+        // do whatever you want with the checked radio
+            var tipo = radios[i].value
+
+        // only one radio can be logically checked, don't check the rest
+        break;
+       }
+      }
+
+      if (tipo == "estudiante"){
+          this.loginService.getEstudiante(usuario.usuario).subscribe(data =>{
+              if(data.clave == usuario.clave){
+                    this.router.navigate(['/estudiantes']);  
+              }else{
+                  alert('Usuario o contraseña invalidos')
+              };
+          });
+      }else{
+          this.loginService.getProfesor(usuario.usuario).subscribe(data =>{
+              if(data.clave == usuario.clave){
+                  this.router.navigate(['/profesor/'+data._id]);  
+              }else{
+                  alert('Usuario o contraseña invalidos')
+              };
+          });
+      }
+
   }
 }
