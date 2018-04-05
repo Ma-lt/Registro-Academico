@@ -50,13 +50,21 @@ export class LoginComponent implements OnInit {
 
   nuevaInstitucion(institucion: string){
     this.registerService.addInstitucion(institucion)
-    .subscribe();
-    this.getInstituciones(null);
+    .subscribe(
+      res => {
+        this.getInstituciones(null);
+      }
+    );
+    //await delay(200);
+
   }
   nuevaEscuela(institucion:string, escuela: string){
     this.registerService.addEscuela(institucion, escuela)
-    .subscribe();
-    this.getEscuelas(institucion);
+    .subscribe(
+      res => {
+        this.getEscuelas(institucion);
+      }
+    );
   }
 
   getInstituciones(event){
@@ -94,7 +102,7 @@ export class LoginComponent implements OnInit {
       if (tipo == "estudiante"){
           this.loginService.getEstudiante(usuario.usuario).subscribe(data =>{
               if(data.clave == usuario.clave){
-                    this.router.navigate(['/estudiantes'+data.usuario]);  
+                    this.router.navigate(['/estudiantes'+data.usuario]);
               }else{
                   alert('Usuario o contraseña invalidos')
               };

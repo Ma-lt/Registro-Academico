@@ -85,6 +85,9 @@ module.exports.insertarUnProfesor = function(req, res) {
 	newProfesor.institucion = req.body.institucion;
 	newProfesor.escuela = req.body.escuela;
 
+	newProfesor.usuario = req.body.usuario;
+	newProfesor.clave = req.body.clave;
+
   newProfesor.save(function(err, profesor) {
     if (err) {
       console.log('Error insertando profesor \n' + err);
@@ -96,60 +99,6 @@ module.exports.insertarUnProfesor = function(req, res) {
   })
 }
 
-/*
-module.exports.insertarUnProfesor = function(req, res) {
-  console.log('Insertar Profesor');
-
-  //crea una instancia del modelo profesor
-  var newProfesor = new profesor();
-
-  //le asigna nombre y apellidos sin ningun cambio
-  newProfesor.nombre = req.body.nombre;
-  newProfesor.apellidos = req.body.apellidos;
-
-  //genera un carnet
-  newProfesor.carnet = 1; //cambiar esto despues
-
-  //asigna el nombre de institucion en una variable
-  var institucion = req.body.institucion;
-  //crea un query para recuperar el ObjectId
-  var query = getInstitucionID(institucion);
-  //ejecuta el query
-  query.exec(function(err, institucionRes) {
-    if (err){
-      console.log(err);
-      return;
-    }
-    //asigna el ObjectId
-    newProfesor.institucion = institucionRes._id;
-    //asigna el nombre de la escuela a una variable
-    var escuela = req.body.escuela;
-    //crea un query para recuperar el ObjectId
-    var query2 = getEscuelaID(escuela, newProfesor.institucion);
-    //ejecuta el query
-    query2.exec(function(err, escuelaRes){
-      if(err)
-        return console.log(err);
-      //asigna el ObjectId
-      newProfesor.escuela = escuelaRes._id;
-      //asigna usuario y clave sin ningun cambio
-      newProfesor.usuario = req.body.usuario;
-      newProfesor.clave = req.body.clave;
-      //salva el profesor en la base de datos
-      newProfesor.save(function(err, profesor) {
-        if (err) {
-          console.log('Error insertando profesor \n' + err);
-        }else{
-          //retorna el estudiante salvado
-          sendJsonResponse(res, 200, profesor);
-					console.log("salva en la base de datos");
-        }
-      })
-    })
-  });
-}
-
-*/
 module.exports.modificarUnProfesorId = function(req,res) {
   console.log("Modificar profesor ")
   if(req.params && req.params.id){
