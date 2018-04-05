@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  //todas estas funciones se llaman desde la parte HTML del componente  
+  //todas estas funciones se llaman desde la parte HTML del componente
   //el subscribe es completamente necesario
-  
+
   onSubmitRegistroEstudiante(estudiante: Estudiante){
     /*llama el metodo addEstudiante del serivicio
      * pasandole el estudiante que obtiene desde
@@ -48,13 +48,28 @@ export class LoginComponent implements OnInit {
      .subscribe();
   }
 
+  nuevaInstitucion(institucion: string){
+    this.registerService.addInstitucion(institucion)
+    .subscribe();
+    this.getInstituciones(null);
+  }
+  nuevaEscuela(institucion:string, escuela: string){
+    this.registerService.addEscuela(institucion, escuela)
+    .subscribe();
+    this.getEscuelas(institucion);
+  }
+
   getInstituciones(event){
       this.registerService.getInstituciones().subscribe(data => this.instituciones = data); //mapea los datos recibidos a la lista de instituciones
   }
 
+  getEscuelas(id:string){
+      this.registerService.getEscuelas(id).subscribe(data => this.escuelas = data); //mapea los datos recibidos a la lista de escuelas
+  }
+
     onSelectInstitucion(id: string){
       this.idInstitucion = id;
-      this.registerService.getEscuelas(id).subscribe(data => this.escuelas = data); //mapea los datos recibidos a la lista de escuelas
+      this.getEscuelas(id);
   }
 
   onSelectEscuela(idEscuela: string){
@@ -79,7 +94,7 @@ export class LoginComponent implements OnInit {
       if (tipo == "estudiante"){
           this.loginService.getEstudiante(usuario.usuario).subscribe(data =>{
               if(data.clave == usuario.clave){
-                    this.router.navigate(['/estudiantes']);  
+                    this.router.navigate(['/estudiantes']);
               }else{
                   alert('Usuario o contraseña invalidos')
               };
@@ -87,7 +102,7 @@ export class LoginComponent implements OnInit {
       }else{
           this.loginService.getProfesor(usuario.usuario).subscribe(data =>{
               if(data.clave == usuario.clave){
-                  this.router.navigate(['/profesor/'+data.usuario]);  
+                  this.router.navigate(['/profesor/'+data.usuario]);
               }else{
                   alert('Usuario o contraseña invalidos')
               };

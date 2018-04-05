@@ -22,4 +22,5 @@ export class AdminInstitucionService{
     getProfesor(usuario: string){
         return this.http.get<Profesor>(this.getProfesorURL + usuario);
     }
+    getInstituciones(){}
 }

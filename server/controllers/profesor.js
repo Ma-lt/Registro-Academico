@@ -66,8 +66,37 @@ function insertarEscuela(Nombre){
 
 /*
 metodo para insertar un profesor
-  parametros: nombre, apellidos, institucion, escuela, usuario y clave
+  parametros: nombre, apellidos, institucion (id), escuela (id), usuario y clave
 */
+
+module.exports.insertarUnProfesor = function(req, res) {
+  console.log('Insertar Profesor');
+
+  //crea una instancia del modelo profesor
+  var newProfesor = new profesor();
+
+  //le asigna nombre y apellidos sin ningun cambio
+  newProfesor.nombre = req.body.nombre;
+  newProfesor.apellidos = req.body.apellidos;
+
+  //genera un carnet
+  newProfesor.carnet = 1; //cambiar esto despues
+
+	newProfesor.institucion = req.body.institucion;
+	newProfesor.escuela = req.body.escuela;
+
+  newProfesor.save(function(err, profesor) {
+    if (err) {
+      console.log('Error insertando profesor \n' + err);
+    }else{
+      //retorna el estudiante salvado
+      sendJsonResponse(res, 200, profesor);
+			console.log("salva en la base de datos");
+    }
+  })
+}
+
+/*
 module.exports.insertarUnProfesor = function(req, res) {
   console.log('Insertar Profesor');
 
@@ -120,6 +149,7 @@ module.exports.insertarUnProfesor = function(req, res) {
   });
 }
 
+*/
 module.exports.modificarUnProfesorId = function(req,res) {
   console.log("Modificar profesor ")
   if(req.params && req.params.id){

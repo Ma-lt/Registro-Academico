@@ -25,6 +25,8 @@ export class RegisterService {
     private getInstitucionesURL = "api/instituciones";
     private getEscuelasURL = "api/escuelas/";
     private getProgramasAcademicosURL = "api/programas/";
+    private postInstitucionURL = "api/institucion";
+    private postEscuelaURL = "api/escuela";
 
     constructor(private http: HttpClient) { } //se inyecta el modulo http para las realizar las solicitudes al API
 
@@ -49,5 +51,13 @@ export class RegisterService {
 
     getProgramasAcademicos(idInstitucion: string, idEscuela: string){
         return this.http.get<ProgramaAcademico[]>(this.getProgramasAcademicosURL + idInstitucion + "/" + idEscuela); //devuelve un array de programas academicos
+    }
+
+    addInstitucion(nombreInstitucion){
+      return this.http.post<Institucion>(this.postInstitucionURL, {"nombre": nombreInstitucion}, httpOptions);
+    }
+
+    addEscuela(idInstitucion, nombreEscuela){
+      return this.http.post<Escuela>(this.postEscuelaURL, {"institucion":idInstitucion, "nombre": nombreEscuela}, httpOptions);
     }
 }
