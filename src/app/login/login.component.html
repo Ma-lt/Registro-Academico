@@ -13,7 +13,7 @@
         <br>
 
         <p>
-        <input type="radio"  class="w3-radio" name="tipo" value="estudiante"> 
+        <input type="radio"  class="w3-radio" name="tipo" value="estudiante">
         <label>Estudiante</label>
         </p>
 
@@ -27,7 +27,7 @@
 
         <br>
         <p>No tiene cuenta?</p>
-        
+
         <p><button class="w3-button" onclick="document.getElementById('modalEstudiante').style.display='block'" (click) = "getInstituciones($event)" >Registro de estudiantes</button></p>
         <p><button class="w3-button" onclick="document.getElementById('modalProfesor').style.display='block'" (click) = "getInstituciones($event)" >Registro de profesores</button></p>
     </div>
@@ -49,7 +49,7 @@
 
         <input class="w3-input" type="text" placeholder="Apellidos" name="apellidos" ngModel>
         <p>
-        <select class="w3-select" name="option" name="institucion" ngModel >
+        <select class="w3-select" (change)="onSelectInstitucion($event.target.value)" name="institucion" ngModel >
             <option value="" disabled selected>Institucion</option>
             <option value={{i._id}} *ngFor="let i of instituciones">{{i.nombre}}</option>
         </select>
@@ -73,7 +73,7 @@
         <p>
         <input type="submit" class="w3-btn w3-red w3-right" value="Registrarse">
         </p>
- 
+
         </form>
     </div>
   </div>
@@ -100,26 +100,34 @@
             <option value={{i._id}} *ngFor="let i of instituciones">{{i.nombre}}</option>
         </select>
         </p>
-        <p>
-        <input class="w3-input" type="text" placeholder="Otra" name="institucion" ngModel>
-        </p>
+        <form  #institucionForm="ngForm">
+          <p>
+          <input class="w3-input" type="text" placeholder="Otra" name="institucionNueva" ngModel>
+          </p>
+          <input type="button"(click)="nuevaInstitucion(institucionForm.value.institucionNueva)"
+           class="w3-btn w3-red w3-right" value="Agregar" >
+       </form>
         <p>
         <select class="w3-select" name="escuela" ngModel>
             <option value="" disabled selected>Escuela</option>
             <option value="{{e._id}}" *ngFor="let e of escuelas">{{e.nombre}}</option>
         </select>
         </p>
-        <p>
-        <input class="w3-input" type="text" placeholder="Otra" name="escuela" ngModel>
-        </p>
+        <form #escuelaForm="ngForm">
+          <p>
+          <input class="w3-input" type="text" placeholder="Otra" name="escuelaNueva" ngModel>
+          </p>
+          <input type="button" (click)="nuevaEscuela(profesorForm.value.institucion, escuelaForm.value.escuelaNueva)" value = "escuela"
+          class="w3-btn w3-red w3-right" value="Agregar" >
+        </form>
         <input class="w3-input" type="text" placeholder="Usuario" name="usuario" ngModel>
 
         <input class="w3-input" type="text" placeholder="Constraseña" name="clave" ngModel>
 
         <p>
-        <input type="submit" class="w3-btn w3-red w3-right" value="Registrarse" >
+        <input type="submit" value = "profesor" class="w3-btn w3-red w3-right" value="Registrarse" >
         </p>
- 
+
         </form>
     </div>
   </div>
