@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
         this.getInstituciones(null);
       }
     );
-    //await delay(200);
 
   }
   nuevaEscuela(institucion:string, escuela: string){

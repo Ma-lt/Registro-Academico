@@ -19,13 +19,34 @@ export class AdminInstitucionService{
     //declaraciones del URL para las solicitudes al servidor
     private getProfesorURL = "api/profesor/";
     private getInstitucionesURL = "api/instituciones";
+    private postInstitucionURL = "api/institucion";
+    private deleteInstitucionURL = "api/institucion/";
+    private putInstitucionURL = "api/institucion/";
 
+    //recupera el profesor que ingresó
     constructor(private http: HttpClient) { } //se inyecta el modulo http para las realizar las solicitudes al API
     getProfesor(usuario: string){
         return this.http.get<Profesor>(this.getProfesorURL + usuario);
     }
 
+    //refresca la lista de instituciones que se muestra
     getInstituciones(){
         return this.http.get<Institucion[]>(this.getInstitucionesURL);
     }
+
+    //agrega una institucion a la base de datos
+    addInstitucion(nombreInstitucion){
+      return this.http.post<Institucion>(this.postInstitucionURL, {"nombre": nombreInstitucion}, httpOptions);
+    }
+
+    //borra una institucion de la base de datos
+    removeInstitucion(idInstitucion){
+      return this.http.delete<Institucion>(this.deleteInstitucionURL+idInstitucion);
+    }
+
+    //modificar una institucion
+    modifyInstitucion(institucionId, institucionNombre){
+      return this.http.put<Institucion>(this.putInstitucionURL+institucionId,
+        {"_id": institucionId, "nombre": institucionNombre}, httpOptions);
+  }
 }
