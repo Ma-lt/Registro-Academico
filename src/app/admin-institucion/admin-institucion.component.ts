@@ -16,11 +16,18 @@ export class AdminInstitucionComponent implements OnInit {
 
   private profesor: Profesor;
   private instituciones: Array<Institucion>;
+  private isavailable: boolean = false;
+  private selectedInstitucion: Institucion;
 
   ngOnInit() {
       let usr = this.route.snapshot.parent.paramMap.get('usr');
       this.adminService.getProfesor(usr).subscribe( data => this.profesor = data );
-      this.adminService.getInstituciones();
+      this.adminService.getInstituciones().subscribe( data => this.instituciones = data);
   }
 
+  onSelectInstitucion(i){
+      this.isavailable = true;
+      console.log(i);
+      this.selectedInstitucion = i;
+  }
 }

@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
       if (tipo == "estudiante"){
           this.loginService.getEstudiante(usuario.usuario).subscribe(data =>{
               if(data.clave == usuario.clave){
-                    this.router.navigate(['/estudiantes']);  
+                    this.router.navigate(['/estudiantes'+data.usuario]);  
               }else{
                   alert('Usuario o contraseña invalidos')
               };

@@ -7,13 +7,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MainProfesorComponent } from './main-profesor/main-profesor.component';
+
 import { MainProfesorModule } from './main-profesor/main-profesor.module';
+import { MainEstudianteModule } from './main-estudiante/main-estudiante.module';
+
 import { AdminInstitucionComponent } from './admin-institucion/admin-institucion.component';
 import { AdminEscuelaComponent } from './admin-escuela/admin-escuela.component';
 import { AdminProgramaComponent } from './admin-programa/admin-programa.component';
 import { AdminMateriaComponent } from './admin-materia/admin-materia.component';
 import { AdminCursoComponent } from './admin-curso/admin-curso.component';
 import { AdminGrupoComponent } from './admin-grupo/admin-grupo.component';
+import { MainEstudianteComponent } from './main-estudiante/main-estudiante.component';
 
 
 @NgModule({
@@ -26,11 +30,13 @@ import { AdminGrupoComponent } from './admin-grupo/admin-grupo.component';
     AdminProgramaComponent,
     AdminMateriaComponent,
     AdminCursoComponent,
-    AdminGrupoComponent
+    AdminGrupoComponent,
+    MainEstudianteComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    MainEstudianteModule,
     MainProfesorModule,
     AppRoutingModule,
     FormsModule

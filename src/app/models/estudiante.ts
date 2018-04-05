@@ -5,5 +5,6 @@ export class Estudiante {
     carnet: number;
     institucion: string;
     programaAcademico: string;
+    usuario: string;
     clave: string
 }
