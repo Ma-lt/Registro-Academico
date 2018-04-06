@@ -43,15 +43,12 @@ export class AdminInstitucionComponent implements OnInit {
   onSelectInstitucion(i){
       console.log(i);
       this.selectedInstitucion = i;
-      if(this.selectedInstitucion != null){
-        console.log("no es nula obvio")
-        console.log(this.selectedInstitucion.nombre);
-        //desactiva la pantalla de nueva institucion
-        this.isavailableNueva = false;
-        //activa la de administrar institucion
-        console.log("se enciende");
-        this.isavailable = true;
-      }
+      console.log(this.selectedInstitucion.nombre);
+      //desactiva la pantalla de nueva institucion
+      this.isavailableNueva = false;
+      //activa la de administrar institucion
+      console.log("se enciende");
+      this.isavailable = true;
   }
 
   //crea una nueva institucion

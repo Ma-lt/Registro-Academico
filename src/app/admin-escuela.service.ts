@@ -19,13 +19,32 @@ export class AdminEscuelaService{
     //declaraciones del URL para las solicitudes al servidor
     private getProfesorURL = "api/profesor/";
     private getEscuelasURL = "api/escuelas/";
+    private postEscuelaURL = "api/escuela";
+    private deleteEscuelaURL = "api/escuela/";
+    private putEscuelaURL = "api/escuela/";
 
     constructor(private http: HttpClient) { } //se inyecta el modulo http para las realizar las solicitudes al API
     getProfesor(usuario: string){
         return this.http.get<Profesor>(this.getProfesorURL + usuario);
     }
     getEscuelas(institucionId){
-      console.log("get get escuelas");
       return this.http.get<Escuela[]>(this.getEscuelasURL + institucionId);
     }
+
+    //agrega una escuela a la base de datos
+    addEscuela(nombreEscuela, institucionId){
+      return this.http.post<Escuela>(this.postEscuelaURL,
+         {"nombre": nombreEscuela, "institucion": institucionId}, httpOptions);
+    }
+
+    //borrar una escuela
+    removeEscuela(idEscuela){
+        return this.http.delete<Escuela>(this.deleteEscuelaURL+idEscuela);
+    }
+
+    //modificar una institucion
+    modifyEscuela(escuelaId, escuelaNombre){
+      return this.http.put<Escuela>(this.putEscuelaURL+escuelaId,
+        {"_id": escuelaId, "nombre": escuelaNombre}, httpOptions);
+  }
 }

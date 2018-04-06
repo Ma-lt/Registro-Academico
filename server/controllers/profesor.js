@@ -176,10 +176,7 @@ module.exports.modificarUnProfesorId = function(req,res) {
   }
 }
 
-//5abc5d45feb810530c1bd755
-
-
-//metodo para buscar un profesonr con un usuario
+//metodo para buscar un profesor con un usuario
 module.exports.leerUnProfesorUsuario = function (req, res) {
 	if(req.params && req.params.usuario){
     //tiene parametos y usuario
