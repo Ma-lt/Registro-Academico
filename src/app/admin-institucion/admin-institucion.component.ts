@@ -12,7 +12,8 @@ import { Institucion } from '../models/institucion';
 })
 export class AdminInstitucionComponent implements OnInit {
 
-  constructor(private adminService: AdminInstitucionService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private adminService: AdminInstitucionService,
+    private route: ActivatedRoute, private router: Router) { }
 
   //variables del html
   private profesor: Profesor;

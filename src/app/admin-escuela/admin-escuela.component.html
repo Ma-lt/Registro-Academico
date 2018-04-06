@@ -1,3 +1,12 @@
-<p>
-  admin-escuela works!
-</p>
+<br>
+<div class="w3-row">
+
+  <div class="w3-container w3-third">
+    <div>
+      <button class="w3-btn w3-blue-grey">Nueva Escuela</button>
+    </div>
+    <div *ngFor="let e of escuelas">
+        <button class="w3-button w3-black">{{e?.nombre}}</button>
+    </div>
+  </div>
+</div>
