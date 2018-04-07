@@ -30,7 +30,6 @@ export class AdminEscuelaComponent implements OnInit {
       this.adminProfService.getProfesor(usr).subscribe(
         data => {
           this.profesor = data;
-          console.log(data);
           this.setInstitucion(data.institucion);
           this.getEscuelas();
         })

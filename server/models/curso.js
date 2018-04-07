@@ -14,7 +14,7 @@ Modelo cuso/ Colección cursos
       materia: {type: mongoose.Schema.Types.ObjectId,ref: 'materia'},
       grupos: [{type: mongoose.Schema.Types.ObjectId,ref: 'grupo'}],
       semestre: Number,
-      año: Number
+      anho: Number
     });
 
 module.exports = mongoose.model('curso', cursoSchema, 'cursos');

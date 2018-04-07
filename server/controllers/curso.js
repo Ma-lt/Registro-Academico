@@ -70,9 +70,9 @@ module.exports.insertarUnCurso = function(req, res) {
   //crea una instancia del modelo curso
   var newCurso = new curso();
 
-	//le asigna semestre, año y materia
+	//le asigna semestre, anho y materia
 	newCurso.semestre = parseInt(req.body.semestre);
-	newCurso.año = parseInt(req.body.año);
+	newCurso.anho = parseInt(req.body.anho);
 	newCurso.materia = req.body.materia;
 
   newCurso.save(function(err, curso){
@@ -125,7 +125,7 @@ module.exports.modificarUnCursoId = function(req, res){
         //realiza las modificaciones
 
 				cursoRes.semestre = parseInt(req.body.semestre);
-				cursoRes.año = parseInt(req.body.año);
+				cursoRes.anho = parseInt(req.body.anho);
 				cursoRes.materia = req.body.materia;
 
         cursoRes.save(function(err, curso){

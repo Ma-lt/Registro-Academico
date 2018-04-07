@@ -1,4 +1,5 @@
 import { Materia } from './materia'
+
 export class ProgramaAcademico{
     _id: string;
     nombre: string;

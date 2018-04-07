@@ -1,3 +1,59 @@
-<p>
-  admin-curso works!
-</p>
+<br>
+<div class="w3-row">
+
+  <div class="w3-container w3-third">
+    <div>
+      <button class="w3-btn w3-blue-grey" (click)="onNuevoCurso()">Nuevo Curso</button>
+    </div>
+<div *ngFor="let c of cursos">
+    <button class="w3-button w3-black" (click)="onSelectCurso(c)">{{c?.materia.nombre}} Sem {{c?.semestre}} Año {{c?.anho}}</button>
+</div>
+  </div>
+
+  <div *ngIf = "isavailable" class="w3-container w3-twothird" >
+<form #cursoModificadoForm="ngForm" class="w3-container">
+  <label><b>Materia</b></label>
+  <p>
+  <select class="w3-select" (change)="onSelectMateria($event.target.value)" name="materia" ngModel >
+      <option value="" disabled selected>Materia</option>
+      <option value={{m._id}} *ngFor="let m of materias">{{m.nombre}}</option>
+  </select>
+  </p>
+  <label><b>Semestre</b></label>
+  <select class="w3-select" (change)="onSelectSemestre($event.target.value)" name="semestre" ngModel>
+      <option value="" disabled selected>Semestre</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+  </select>
+  <label><b>Año</b></label>
+  <input class="w3-input w3-border w3-light-grey" type="text"
+  value = {{selectedAnhoStr}} name="anho" ngModel>
+  <br>
+  <button class="w3-btn w3-blue-grey" (click)="modificarCurso(cursoModificadoForm.value)">Guardar</button>
+  <button class="w3-btn w3-blue-grey" (click)="borrarCurso()">Borrar</button>
+</form>
+  </div>
+
+  <div *ngIf = "isavailableNueva" class="w3-container w3-twothird">
+<form #cursoNuevoForm="ngForm" class="w3-container">
+  <label><b>Materia</b></label>
+  <p>
+  <select class="w3-select" (change)="onSelectMateria($event.target.value)" name="materia" ngModel >
+      <option value="" disabled selected>Materia</option>
+      <option value={{m._id}} *ngFor="let m of materias">{{m.nombre}}</option>
+  </select>
+  </p>
+  <label><b>Semestre</b></label>
+  <select class="w3-select" (change)="onSelectSemestre($event.target.value)" name="semestre" ngModel >
+      <option value="" disabled selected>Semestre</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+  </select>
+  <label><b>Año</b></label>
+  <input class="w3-input w3-border w3-light-grey" type="text" name="anho" ngModel>
+  <br>
+  <button class="w3-btn w3-blue-grey" (click)="nuevoCurso(cursoNuevoForm.value)">Guardar</button>
+</form>
+  </div>
+
+</div>

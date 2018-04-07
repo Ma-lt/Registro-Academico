@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Escuela } from '../../models/escuela';
 import {} from 'jasmine';
+
 //opciones que se pasan como parametro para hacer los post request
 const httpOptions = {
   headers: new HttpHeaders({

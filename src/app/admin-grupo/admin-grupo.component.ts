@@ -1,15 +1,50 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AdminGrupoService } from '../services/grupo/admin-grupo.service';
+import { AdminProfesorService } from '../services/profesor/admin-profesor.service';
+import { AdminMateriaService } from '../services/materia/admin-materia.service';
+import { Profesor } from '../models/profesor';
+import { Grupo } from '../models/grupo';
+import { Materia } from '../models/materia';
 
 @Component({
   selector: 'app-admin-grupo',
   templateUrl: './admin-grupo.component.html',
-  styleUrls: ['./admin-grupo.component.css']
+  styleUrls: ['./admin-grupo.component.css'],
+  providers: [AdminGrupoService, AdminProfesorService, AdminMateriaService]
 })
 export class AdminGrupoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private adminGruService: AdminGrupoService,
+    private adminProfService: AdminProfesorService,
+    private adminMatService: AdminMateriaService,
+    private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit() {
-  }
+    private profesor: Profesor;
+    private institucion: string;//id de la institucion
+
+    //metodo inicial
+    ngOnInit() {
+        let usr = this.route.snapshot.parent.paramMap.get('usr');
+        this.adminProfService.getProfesor(usr).subscribe(
+          data => {
+            this.profesor = data;
+            this.setInstitucion(data.institucion);
+            //this.getGrupos();
+          })
+    }
+
+    //metodo para asignar la institucion
+    setInstitucion(institucion){
+      this.institucion = institucion._id;
+    }
+
+/*
+    //refresca la lista de grupos que se muestra
+    getGrupos(){
+      this.adminGruService.getGrupos(this.institucion).subscribe( data => {
+        this.grupos = data});
+
+    }*/
 
 }

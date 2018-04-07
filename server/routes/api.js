@@ -63,7 +63,7 @@ router.get('/cursos/:institucion', ctrlCursos.buscarTodosCursos);
 router.get('/curso/:id', ctrlCursos.buscarUnCursoId);
 router.post('/curso', ctrlCursos.insertarUnCurso);
 router.delete('/curso/:id', ctrlCursos.eliminarUnCursoId);
-router.put('/materia/:id', ctrlCursos.modificarUnCursoId);
+router.put('/curso/:id', ctrlCursos.modificarUnCursoId);
 
 //grupos
 
