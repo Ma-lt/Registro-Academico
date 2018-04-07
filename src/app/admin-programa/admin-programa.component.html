@@ -19,11 +19,13 @@
   <button class="w3-btn w3-blue-grey" (click)="modificarPrograma(programaModificadoForm.value)">Guardar</button>
   <br>
   <label><b>Malla Academica:</b></label>
-  <div *ngFor="let m of selectedPrograma.malla">
-      <button class="w3-button w3-black" (click)="onSelectMateria(m)">{{p?.nombre}}</button>
+  <div *ngFor="let m of selectedPrograma.malla" >
+      <button class="w3-button w3-black" (click)="onSelectMateriaBorrar(m)">{{m?.nombre}}</button>
   </div>
-  <label><b>Materia seleccionada (cambiar ahora)</b></label>
+  <label><b>{{selectedMateriaBorrar.nombre}}</b></label>
+  <br>
   <button class="w3-btn w3-blue-grey" (click)="borrarMateria()">Borrar Materia</button>
+
   <br>
   <select class="w3-select" (change)="onSelectMateriaAgregar($event.target.value)" name="materia">
       <option value="" disabled selected>Materia</option>

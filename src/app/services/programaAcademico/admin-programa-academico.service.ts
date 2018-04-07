@@ -52,6 +52,10 @@ export class AdminProgramaAcademicoService {
   addMateriaProgramaAcademico(programaId, materiaId){
     return this.http.put<ProgramaAcademico>(this.putInsertarMateriaProgramaURL+programaId,
     {"materia": materiaId}, httpOptions);
-}
-
+  }
+  //borrar una materia de la malla
+  removeMateriaProgramaAcademico(programaId, materiaId){
+    return this.http.put<ProgramaAcademico>(this.putEliminarMateriaProgramaURL+programaId,
+    {"materia": materiaId}, httpOptions);
+  }
 }

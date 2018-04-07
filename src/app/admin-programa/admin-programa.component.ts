@@ -24,8 +24,8 @@ export class AdminProgramaComponent implements OnInit {
   private isavailableNueva: boolean = false;
   private selectedPrograma: ProgramaAcademico;
   private selectedMateriaAgregar: string;
+  private selectedMateriaBorrar: string;
   private materias: Array<Materia>;
-  private materiasPrograma: Array<Materia>;
 
   constructor(private adminProgService: AdminProgramaAcademicoService,
     private adminProfService: AdminProfesorService,
@@ -77,7 +77,6 @@ export class AdminProgramaComponent implements OnInit {
       this.adminProgService.getProgramasAcademicos(this.idInstitucion, this.idEscuela)
       .subscribe(data=> {
         this.programasAcademicos = data
-        console.log(data);
       }); //mapea los datos recibidos a la lista de programas
 
   }
@@ -91,27 +90,35 @@ export class AdminProgramaComponent implements OnInit {
 
   }
 
+  setMateriaBorrar(malla){
+    if(malla.length > 0)
+      this.selectedMateriaBorrar = malla[0];
+    else
+      this.selectedMateriaBorrar = "";
+  }
+
   //muestra la pantalla de administar un programa
   onSelectPrograma(p){
       //refresca la lista de materias
       this.getMaterias();
       this.selectedPrograma = p;
-      this.materiasPrograma = p.malla;
-      console.log(p);
-      console.log("materias");
-      console.log(this.materiasPrograma);
+      this.setMateriaBorrar(this.selectedPrograma.malla);
+      this.refrescarMaterias();
       //desactiva la pantalla de nuevo programa
       this.isavailableNueva = false;
       //activa la de administrar programa
       this.isavailable = true;
   }
 
-  //selecciona una materia
+  //selecciona una materia que agregar
   onSelectMateriaAgregar(m){
     this.selectedMateriaAgregar = m;
   }
 
-
+  //selecciona una materia que borrar
+  onSelectMateriaBorrar(m){
+    this.selectedMateriaBorrar = m;
+  }
 
   //borrar un programa acdemico
   borrarPrograma(){
@@ -137,9 +144,18 @@ export class AdminProgramaComponent implements OnInit {
      );
   }
 
+  //refresca ambas listas de materias
+  refrescarMaterias(){
+    //no tengo idea de como hacer esto
+}
   agregarMateria(){
     this.adminProgService.addMateriaProgramaAcademico(this.selectedPrograma._id, this.selectedMateriaAgregar)
+    .subscribe(res=>{
+      this.refrescarMaterias();
+    })
+  }
+  borrarMateria(){
+    this.adminProgService.removeMateriaProgramaAcademico(this.selectedPrograma._id, this.selectedMateriaBorrar)
     .subscribe()
   }
-  borrarMateria(){}
 }

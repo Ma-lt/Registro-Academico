@@ -35,7 +35,7 @@ module.exports.buscarTodosProgramasAcademicos = function(req,res){
         "institucion": req.params.institucion,
 				"escuela": req.params.escuela
       })
-			.populate('materia')
+			.populate('malla')
       .exec(function(err, programas){
   				if(!programas){
   					sendJsonResponse(res, 404,{"message": "Programas no encontrados"});
@@ -60,7 +60,7 @@ module.exports.buscarUnProgramaAcademicoId = function(req, res){
       .findById(req.params.id)
 			.populate('institucion')
 			.populate('escuela')
-			.populate('malla.materia')
+			.populate('malla')
       .exec(function(err, programaRes){
         if(!programaRes){//si no existe, no lo encontró
           sendJsonResponse(res, 404,{"message": "Programa Academico no encontrado"});
