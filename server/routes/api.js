@@ -47,7 +47,7 @@ router.get('/programas/:institucion/:escuela', ctrlProgramas.buscarTodosPrograma
 router.get('/programa/:id', ctrlProgramas.buscarUnProgramaAcademicoId);
 router.post('/programa', ctrlProgramas.insertarUnProgramaAcademico);
 router.delete('/programa/:id', ctrlProgramas.eliminarUnProgramaAcademicoId);
-router.put('/programa/:id', ctrlProgramas.eliminarUnProgramaAcademicoId);
+router.put('/programa/:id', ctrlProgramas.modificarUnProgramaAcademicoId);
 router.put('/programa-agM/:id', ctrlProgramas.agregarMateriaPlanAcademico);
 router.put('/programa-elM/:id', ctrlProgramas.eliminarMateriaPlanAcademico);
 

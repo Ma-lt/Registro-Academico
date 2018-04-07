@@ -24,6 +24,7 @@ export class AdminEscuelaComponent implements OnInit {
   private isavailable: boolean = false;
   private isavailableNueva: boolean = false;
 
+  //metodo inicial
   ngOnInit() {
   	  let usr = this.route.snapshot.parent.paramMap.get('usr');
       this.adminProfService.getProfesor(usr).subscribe(
@@ -35,9 +36,10 @@ export class AdminEscuelaComponent implements OnInit {
         })
   }
 
-setInstitucion(institucion){
-  this.institucion = institucion._id;
-}
+  //metodo para asignar la institucion
+  setInstitucion(institucion){
+    this.institucion = institucion._id;
+  }
 
   //refresca la lista de escuelas que se muestra
   getEscuelas(){
@@ -46,13 +48,10 @@ setInstitucion(institucion){
 
   //muestra la pantalla de administar una escuela
   onSelectEscuela(e){
-      console.log(e);
       this.selectedEscuela = e;
-      console.log(this.selectedEscuela.nombre);
       //desactiva la pantalla de nueva escuela
       this.isavailableNueva = false;
       //activa la de administrar escuela
-      console.log("se enciende");
       this.isavailable = true;
   }
 
@@ -89,11 +88,10 @@ borrarEscuela(){
 
 //modifcar una escuela
 modificarEscuela(escuelaNueva){
-  console.log(this.selectedEscuela);
   this.adminEscService.modifyEscuela(this.selectedEscuela._id, escuelaNueva.nombre)
    .subscribe(
      res => {
-       //refresca las instituciones
+       //refresca las escuelas
        this.getEscuelas();
      }
    );

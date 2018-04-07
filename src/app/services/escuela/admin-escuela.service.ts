@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Profesor } from '../../models/profesor';
 import { Escuela } from '../../models/escuela';
 import {} from 'jasmine';
 //opciones que se pasan como parametro para hacer los post request
@@ -23,6 +22,8 @@ export class AdminEscuelaService{
     private putEscuelaURL = "api/escuela/";
 
     constructor(private http: HttpClient) { } //se inyecta el modulo http para las realizar las solicitudes al API
+
+    //recupera todas las escuelas de la institucion
     getEscuelas(institucionId){
       return this.http.get<Escuela[]>(this.getEscuelasURL + institucionId);
     }
@@ -38,7 +39,7 @@ export class AdminEscuelaService{
         return this.http.delete<Escuela>(this.deleteEscuelaURL+idEscuela);
     }
 
-    //modificar una institucion
+    //modificar una escuela
     modifyEscuela(escuelaId, escuelaNombre){
       return this.http.put<Escuela>(this.putEscuelaURL+escuelaId,
         {"_id": escuelaId, "nombre": escuelaNombre}, httpOptions);

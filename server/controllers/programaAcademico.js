@@ -35,6 +35,7 @@ module.exports.buscarTodosProgramasAcademicos = function(req,res){
         "institucion": req.params.institucion,
 				"escuela": req.params.escuela
       })
+			.populate('materia')
       .exec(function(err, programas){
   				if(!programas){
   					sendJsonResponse(res, 404,{"message": "Programas no encontrados"});
@@ -59,7 +60,7 @@ module.exports.buscarUnProgramaAcademicoId = function(req, res){
       .findById(req.params.id)
 			.populate('institucion')
 			.populate('escuela')
-			.populate('materia')
+			.populate('malla.materia')
       .exec(function(err, programaRes){
         if(!programaRes){//si no existe, no lo encontró
           sendJsonResponse(res, 404,{"message": "Programa Academico no encontrado"});
@@ -88,26 +89,16 @@ module.exports.insertarUnProgramaAcademico = function(req, res) {
   //le asigna nombre sin ningun cambio
   newProgramaAcademico.nombre = req.body.nombre;
   newProgramaAcademico.institucion = req.body.institucion;
+	newProgramaAcademico.escuela = req.body.escuela;
 
-  //asigna el nombre de la escuela a una variable
-  var escuela = req.body.escuela;
-  //crea un query para recuperar el ObjectId
-  var query = getEscuelaID(escuela, req.body.institucion);
-  //ejecuta el query
-  query.exec(function(err, escuelaRes){
-    if(err)
-      return console.log(err);
-    //asigna el ObjectId
-    newProgramaAcademico.escuela = escuelaRes._id;
-    newProgramaAcademico.save(function(err, programaAcademico){
-      if (err) {
-        console.log('Error insertando programa \n' + err);
-      }else{
-        //retorna el estudiante salvado
-        sendJsonResponse(res, 200, programaAcademico);
-        console.log("salva en la base de datos");
-      }
-    })
+  newProgramaAcademico.save(function(err, programaAcademico){
+    if (err) {
+      console.log('Error insertando programa \n' + err);
+    }else{
+      //retorna el estudiante salvado
+      sendJsonResponse(res, 200, programaAcademico);
+      console.log("salva en la base de datos");
+    }
   })
 }
 

@@ -43,13 +43,10 @@ export class AdminInstitucionComponent implements OnInit {
 
   //muestra la pantalla de administar una institucion
   onSelectInstitucion(i){
-      console.log(i);
       this.selectedInstitucion = i;
-      console.log(this.selectedInstitucion.nombre);
       //desactiva la pantalla de nueva institucion
       this.isavailableNueva = false;
       //activa la de administrar institucion
-      console.log("se enciende");
       this.isavailable = true;
   }
 

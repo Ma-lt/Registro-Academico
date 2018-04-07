@@ -1,3 +1,33 @@
-<p>
-  admin-materia works!
-</p>
+<br>
+<div class="w3-row">
+
+  <div class="w3-container w3-third">
+    <div>
+      <button class="w3-btn w3-blue-grey" (click)="onNuevaMateria()">Nueva Materia</button>
+    </div>
+<div *ngFor="let m of materias">
+    <button class="w3-button w3-black" (click)="onSelectMateria(m)">{{m?.nombre}}</button>
+</div>
+  </div>
+
+  <div *ngIf = "isavailable" class="w3-container w3-twothird" >
+<form #materiaModificadaForm="ngForm" class="w3-container">
+  <label><b>Nombre</b></label>
+  <input class="w3-input w3-border w3-light-grey" type="text"
+  value = {{selectedMateria.nombre}} name="nombre" ngModel>
+  <br>
+  <button class="w3-btn w3-blue-grey" (click)="modificarMateria(materiaModificadaForm.value)">Guardar</button>
+  <button class="w3-btn w3-blue-grey" (click)="borrarMateria()">Borrar</button>
+</form>
+  </div>
+
+  <div *ngIf = "isavailableNueva" class="w3-container w3-twothird">
+<form #materiaNuevaForm="ngForm" class="w3-container">
+  <label><b>Nombre</b></label>
+  <input class="w3-input w3-border w3-light-grey" type="text" name="nombre" ngModel>
+  <br>
+  <button class="w3-btn w3-blue-grey" (click)="nuevaMateria(materiaNuevaForm.value.nombre)">Guardar</button>
+</form>
+  </div>
+
+</div>
