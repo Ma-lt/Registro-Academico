@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { AdminEscuelaService } from '../admin-escuela.service';
+import { AdminEscuelaService } from '../services/escuela/admin-escuela.service';
+import { AdminProfesorService } from '../services/profesor/admin-profesor.service';
 import { Profesor } from '../models/profesor';
 import { Escuela } from '../models/escuela';
 
@@ -8,11 +9,12 @@ import { Escuela } from '../models/escuela';
   selector: 'app-admin-escuela',
   templateUrl: './admin-escuela.component.html',
   styleUrls: ['./admin-escuela.component.css'],
-  providers: [AdminEscuelaService]
+  providers: [AdminEscuelaService, AdminProfesorService]
 })
 export class AdminEscuelaComponent implements OnInit {
 
-  constructor(private adminService: AdminEscuelaService,
+  constructor(private adminEscService: AdminEscuelaService,
+    private adminProfService: AdminProfesorService,
     private route: ActivatedRoute, private router: Router) { }
 
   private profesor: Profesor;
@@ -24,7 +26,7 @@ export class AdminEscuelaComponent implements OnInit {
 
   ngOnInit() {
   	  let usr = this.route.snapshot.parent.paramMap.get('usr');
-      this.adminService.getProfesor(usr).subscribe(
+      this.adminProfService.getProfesor(usr).subscribe(
         data => {
           this.profesor = data;
           console.log(data);
@@ -39,7 +41,7 @@ setInstitucion(institucion){
 
   //refresca la lista de escuelas que se muestra
   getEscuelas(){
-    this.adminService.getEscuelas(this.institucion).subscribe( data => this.escuelas = data);
+    this.adminEscService.getEscuelas(this.institucion).subscribe( data => this.escuelas = data);
   }
 
   //muestra la pantalla de administar una escuela
@@ -62,7 +64,7 @@ setInstitucion(institucion){
 
   //crea una nueva escuela
   nuevaEscuela(escuela: string){
-    this.adminService.addEscuela(escuela, this.institucion)
+    this.adminEscService.addEscuela(escuela, this.institucion)
     .subscribe(
       res => {
         //refresca las escuelas
@@ -74,7 +76,7 @@ setInstitucion(institucion){
 
 //borrar una escuela
 borrarEscuela(){
-  this.adminService.removeEscuela(this.selectedEscuela._id)
+  this.adminEscService.removeEscuela(this.selectedEscuela._id)
   .subscribe(
     res => {
       //refresca las instituciones
@@ -88,7 +90,7 @@ borrarEscuela(){
 //modifcar una escuela
 modificarEscuela(escuelaNueva){
   console.log(this.selectedEscuela);
-  this.adminService.modifyEscuela(this.selectedEscuela._id, escuelaNueva.nombre)
+  this.adminEscService.modifyEscuela(this.selectedEscuela._id, escuelaNueva.nombre)
    .subscribe(
      res => {
        //refresca las instituciones

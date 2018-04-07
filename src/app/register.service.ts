@@ -49,9 +49,6 @@ export class RegisterService {
         return this.http.get<Escuela[]>(this.getEscuelasURL + id); //devuelve un array de escuelas
     }
 
-    getProgramasAcademicos(idInstitucion: string, idEscuela: string){
-        return this.http.get<ProgramaAcademico[]>(this.getProgramasAcademicosURL + idInstitucion + "/" + idEscuela); //devuelve un array de programas academicos
-    }
 
     addInstitucion(nombreInstitucion){
       return this.http.post<Institucion>(this.postInstitucionURL, {"nombre": nombreInstitucion}, httpOptions);

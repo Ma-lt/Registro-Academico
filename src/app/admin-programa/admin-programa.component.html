@@ -1,9 +1,38 @@
+<p>
+  admin-programa works!
+</p>
+<!--
 <br>
-<div  class="w3-row">
+<div class="w3-row">
+
   <div class="w3-container w3-third">
     <div>
-      <button class="w3-btn w3-blue-grey">Nuevo Programa</button>
+      <button class="w3-btn w3-blue-grey" (click)="onNuevoPrograma()">Nuevo Programa</button>
     </div>
-  </div>
-  
+<div *ngFor="let p of programas">
+    <button class="w3-button w3-black" (click)="onSelectPrograma(p)">{{p?.nombre}}</button>
 </div>
+  </div>
+
+  <div *ngIf = "isavailable" class="w3-container w3-twothird" >
+<form #programaModificadoForm="ngForm" class="w3-container">
+  <label><b>Nombre</b></label>
+  <input class="w3-input w3-border w3-light-grey" type="text"
+  value = {{selectedPrograma.nombre}} name="nombre" ngModel>
+  <br>
+  <button class="w3-btn w3-blue-grey" (click)="modificarPrograma(programaModificadoForm.value)">Guardar</button>
+  <button class="w3-btn w3-blue-grey" (click)="borrarPrograma()">Borrar</button>
+</form>
+  </div>
+
+  <div *ngIf = "isavailableNueva" class="w3-container w3-twothird">
+<form #programaNuevoForm="ngForm" class="w3-container">
+  <label><b>Nombre</b></label>
+  <input class="w3-input w3-border w3-light-grey" type="text" name="nombre" ngModel>
+  <br>
+  <button class="w3-btn w3-blue-grey" (click)="nuevoPrograma(programaNuevoForm.value.nombre)">Guardar</button>
+</form>
+  </div>
+
+</div>
+-->

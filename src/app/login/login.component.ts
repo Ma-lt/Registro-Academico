@@ -4,20 +4,33 @@ import { Profesor } from '../models/profesor';
 import { Institucion } from '../models/institucion';
 import { Escuela } from '../models/escuela';
 import { ProgramaAcademico } from '../models/programaAcademico';
-import { RegisterService } from '../register.service';
-import { LoginService } from '../login.service';
+import { AdminProfesorService } from '../services/profesor/admin-profesor.service';
+import { AdminEstudianteService } from '../services/estudiante/admin-estudiante.service';
+import { AdminInstitucionService } from '../services/institucion/admin-institucion.service';
+import { AdminEscuelaService } from '../services/escuela/admin-escuela.service';
+import { AdminProgramaAcademicoService } from '../services/programaAcademico/admin-programa-academico.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [RegisterService, LoginService] //en este array se deben insertar los servicios que utiliza el componente
+  providers: [
+    AdminProfesorService,
+    AdminEstudianteService,
+    AdminInstitucionService,
+    AdminEscuelaService,
+    AdminProgramaAcademicoService] //en este array se deben insertar los servicios que utiliza el componente
 }
 )
 export class LoginComponent implements OnInit {
 
-    constructor(private router: Router, private registerService: RegisterService, private loginService: LoginService) { } //aqui se hace la inyeccion del servicio
+    constructor(private router: Router,
+      private adminProfService: AdminProfesorService,
+      private adminEstService: AdminEstudianteService,
+      private adminInsService: AdminInstitucionService,
+      private adminEscService: AdminEscuelaService,
+      private adminProgService: AdminProgramaAcademicoService) { } //aqui se hace la inyeccion del servicio
 
   //declaraciones de las variables que se usan desde la interfaz HTML para desplegar las opciones del select
   private instituciones: Array<Institucion>;
@@ -35,7 +48,7 @@ export class LoginComponent implements OnInit {
     /*llama el metodo addEstudiante del serivicio
      * pasandole el estudiante que obtiene desde
      * la interfaz*/
-    this.registerService.addEstudiante(estudiante)
+    this.adminEstService.addEstudiante(estudiante)
     .subscribe();
   }
 
@@ -44,12 +57,12 @@ export class LoginComponent implements OnInit {
      * pasandole el profesor que obtiene desde
      * la interfaz*/
      console.log(profesor);
-     this.registerService.addProfesor(profesor)
+     this.adminProfService.addProfesor(profesor)
      .subscribe();
   }
 
   nuevaInstitucion(institucion: string){
-    this.registerService.addInstitucion(institucion)
+    this.adminInsService.addInstitucion(institucion)
     .subscribe(
       res => {
         this.getInstituciones(null);
@@ -58,7 +71,7 @@ export class LoginComponent implements OnInit {
 
   }
   nuevaEscuela(institucion:string, escuela: string){
-    this.registerService.addEscuela(institucion, escuela)
+    this.adminEscService.addEscuela(institucion, escuela)
     .subscribe(
       res => {
         this.getEscuelas(institucion);
@@ -67,11 +80,11 @@ export class LoginComponent implements OnInit {
   }
 
   getInstituciones(event){
-      this.registerService.getInstituciones().subscribe(data => this.instituciones = data); //mapea los datos recibidos a la lista de instituciones
+      this.adminInsService.getInstituciones().subscribe(data => this.instituciones = data); //mapea los datos recibidos a la lista de instituciones
   }
 
   getEscuelas(id:string){
-      this.registerService.getEscuelas(id).subscribe(data => this.escuelas = data); //mapea los datos recibidos a la lista de escuelas
+      this.adminEscService.getEscuelas(id).subscribe(data => this.escuelas = data); //mapea los datos recibidos a la lista de escuelas
   }
 
     onSelectInstitucion(id: string){
@@ -80,7 +93,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSelectEscuela(idEscuela: string){
-      this.registerService.getProgramasAcademicos(idEscuela, this.idInstitucion).subscribe(data=> this.programasAcademicos = data); //mapea los datos recibidos a la lista de programas
+      this.adminProgService.getProgramasAcademicos(idEscuela, this.idInstitucion).subscribe(data=> this.programasAcademicos = data); //mapea los datos recibidos a la lista de programas
   }
 
   onSubmitLogin(usuario){
@@ -99,7 +112,7 @@ export class LoginComponent implements OnInit {
       }
 
       if (tipo == "estudiante"){
-          this.loginService.getEstudiante(usuario.usuario).subscribe(data =>{
+          this.adminEstService.getEstudiante(usuario.usuario).subscribe(data =>{
               if(data.clave == usuario.clave){
                     this.router.navigate(['/estudiantes'+data.usuario]);
               }else{
@@ -107,7 +120,7 @@ export class LoginComponent implements OnInit {
               };
           });
       }else{
-          this.loginService.getProfesor(usuario.usuario).subscribe(data =>{
+          this.adminProfService.getProfesor(usuario.usuario).subscribe(data =>{
               if(data.clave == usuario.clave){
                   this.router.navigate(['/profesor/'+data.usuario]);
               }else{

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { AdminInstitucionService } from '../admin-institucion.service';
+import { AdminInstitucionService } from '../services/institucion/admin-institucion.service';
+import { AdminProfesorService } from '../services/profesor/admin-profesor.service';
 import { Profesor } from '../models/profesor';
 import { Institucion } from '../models/institucion';
 
@@ -8,11 +9,12 @@ import { Institucion } from '../models/institucion';
   selector: 'app-admin-institucion',
   templateUrl: './admin-institucion.component.html',
   styleUrls: ['./admin-institucion.component.css'],
-  providers: [AdminInstitucionService]
+  providers: [AdminInstitucionService, AdminProfesorService]
 })
 export class AdminInstitucionComponent implements OnInit {
 
-  constructor(private adminService: AdminInstitucionService,
+  constructor(private adminInsService: AdminInstitucionService,
+    private adminProfService: AdminProfesorService,
     private route: ActivatedRoute, private router: Router) { }
 
   //variables del html
@@ -24,13 +26,13 @@ export class AdminInstitucionComponent implements OnInit {
   //metodo que se llama al inicio
   ngOnInit() {
       let usr = this.route.snapshot.parent.paramMap.get('usr');
-      this.adminService.getProfesor(usr).subscribe( data => this.profesor = data );
+      this.adminProfService.getProfesor(usr).subscribe( data => this.profesor = data );
       this.getInstituciones();
   }
 
   //refresca la lista de instituciones que se muestra
   getInstituciones(){
-    this.adminService.getInstituciones().subscribe( data => this.instituciones = data);
+    this.adminInsService.getInstituciones().subscribe( data => this.instituciones = data);
   }
 
   //muestra la pantalla de nueva institucion
@@ -53,7 +55,7 @@ export class AdminInstitucionComponent implements OnInit {
 
   //crea una nueva institucion
   nuevaInstitucion(institucion: string){
-    this.adminService.addInstitucion(institucion)
+    this.adminInsService.addInstitucion(institucion)
     .subscribe(
       res => {
         //refresca las instituciones
@@ -64,7 +66,7 @@ export class AdminInstitucionComponent implements OnInit {
 
   //borrar una institucion
   borrarInstitucion(){
-    this.adminService.removeInstitucion(this.selectedInstitucion._id)
+    this.adminInsService.removeInstitucion(this.selectedInstitucion._id)
     .subscribe(
       res => {
         //refresca las instituciones
@@ -78,7 +80,7 @@ export class AdminInstitucionComponent implements OnInit {
   //modifcar una institucion
   modificarInstitucion(institucionNueva){
     console.log(this.selectedInstitucion);
-    this.adminService.modifyInstitucion(this.selectedInstitucion._id, institucionNueva.nombre)
+    this.adminInsService.modifyInstitucion(this.selectedInstitucion._id, institucionNueva.nombre)
      .subscribe(
        res => {
          //refresca las instituciones
