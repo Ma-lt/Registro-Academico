@@ -16,7 +16,7 @@ const httpOptions = {
 export class AdminCursoService {
 
   //declaraciones del URL para las solicitudes al servidor
-  private getCusosURL = "api/cursos/";
+  private getCursosURL = "api/cursos/";
   private postCursoURL = "api/curso";
   private deleteCursoURL = "api/curso/";
   private putCursoURL = "api/curso/";
@@ -25,7 +25,7 @@ export class AdminCursoService {
 
   //recupera todas las escuelas de la institucion
   getCursos(institucionId){
-    return this.http.get<Curso[]>(this.getCusosURL + institucionId);
+    return this.http.get<Curso[]>(this.getCursosURL + institucionId);
   }
 
   //agrega un curso a la base de datos

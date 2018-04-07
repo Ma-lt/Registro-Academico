@@ -66,7 +66,7 @@ router.delete('/curso/:id', ctrlCursos.eliminarUnCursoId);
 router.put('/curso/:id', ctrlCursos.modificarUnCursoId);
 
 //grupos
-
+router.get('/grupos/:institucion', ctrlGrupos.buscarTodosGrupos);
 router.get('/grupo/:id', ctrlGrupos.buscarUnGrupoId);
 router.post('/grupo', ctrlGrupos.insertarUnGrupo);
 router.delete('/grupo/:id', ctrlGrupos.eliminarUnGrupoId);

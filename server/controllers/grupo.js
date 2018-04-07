@@ -21,9 +21,34 @@ var numeroGrupo = function(cursoP){
   return query;
 }
 
-//metodo para buscar todos los grupos de una institucion
-
-//no tengo idea de como hacer este, ojala no lo necesitemos
+//metodo para buscar todas los grupos de una institucion
+module.exports.buscarTodosGrupos = function(req,res){
+  if(req.params && req.params.institucion){
+    grupo
+      .find({})
+			.populate({
+				path: 'curso',
+				populate: ({
+					path: 'materia',
+					match: {
+						institucion: req.params.institucion
+					}
+				})
+			})
+      .exec(function(err, cursos){
+  				if(!cursos){
+  					sendJsonResponse(res, 404,{"message": "Cursos no encontradas"});
+  					return
+  				} else if (err){
+  					sendJsonResponse(res,404, err);
+  					return;
+  				}
+  				sendJsonResponse(res, 200,cursos);
+  			});
+    }else{
+      sendJsonResponse(res, 404,{"message": "No hay institucion en la solicitud"});
+    }
+}
 
 //metodo para buscar un grupo por id
 module.exports.buscarUnGrupoId = function(req, res){

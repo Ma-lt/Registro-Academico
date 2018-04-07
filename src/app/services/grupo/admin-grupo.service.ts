@@ -16,8 +16,20 @@ const httpOptions = {
 export class AdminGrupoService {
 
   //declaraciones del URL para las solicitudes al servidor
-  //private getGruposURL = "api/grupos/";
+  private getGruposURL = "api/grupos/";
+  private postGrupoURL = "api/grupo";
 
   constructor(private http: HttpClient) { } //se inyecta el modulo http para las realizar las solicitudes al API
+
+  //recupera todas las escuelas de la institucion
+  getGrupos(institucionId){
+    return this.http.get<Grupo[]>(this.getGruposURL + institucionId);
+  }
+
+  //agrega un grupo a la base de datos
+  addGrupo(cursoId){
+    return this.http.post<Grupo>(this.postGrupoURL,
+      {"curso" : cursoId}, httpOptions);
+  }
 
 }

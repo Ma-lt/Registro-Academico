@@ -22,6 +22,9 @@ export class AdminGrupoComponent implements OnInit {
 
     private profesor: Profesor;
     private institucion: string;//id de la institucion
+    private grupos: Array<Grupo>;
+    private isavailable: boolean = false;
+    private isavailableNueva: boolean = false;
 
     //metodo inicial
     ngOnInit() {
@@ -30,7 +33,7 @@ export class AdminGrupoComponent implements OnInit {
           data => {
             this.profesor = data;
             this.setInstitucion(data.institucion);
-            //this.getGrupos();
+            this.getGrupos();
           })
     }
 
@@ -39,12 +42,31 @@ export class AdminGrupoComponent implements OnInit {
       this.institucion = institucion._id;
     }
 
-/*
     //refresca la lista de grupos que se muestra
     getGrupos(){
-      this.adminGruService.getGrupos(this.institucion).subscribe( data => {
-        this.grupos = data});
+      this.adminGruService.getGrupos(this.institucion).subscribe(
+        data => {
+        this.grupos = data
+        console.log(data);
+      });
 
-    }*/
+    }
+
+    //muestra la pantalla de nuevo grupo
+    onNuevoGrupo(){
+      this.isavailable = false;
+      this.isavailableNueva = true;
+    }
+
+    //crea una nueva grupo
+    nuevoGrupo(grupo){/*
+      this.adminGruService.addGrupo(grupo.curso)
+      .subscribe(
+        res => {
+          //refresca los grupos
+          this.getGrupos();
+        }
+      );*/
+    }
 
 }

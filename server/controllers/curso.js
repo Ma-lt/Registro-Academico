@@ -11,7 +11,7 @@ var sendJsonResponse = function(res, status, content) {
 	res.json(content);
 };
 
-//metodo para buscar todas las materias de una institucion
+//metodo para buscar todas los cursos de una institucion
 module.exports.buscarTodosCursos = function(req,res){
   if(req.params && req.params.institucion){
     curso
