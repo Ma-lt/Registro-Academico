@@ -76,21 +76,26 @@ export class AdminGrupoComponent implements OnInit {
       this.isavailableNueva = true;
     }
 
-        //seleccionar materia
+    //seleccionar materia
     onSelectMateria(m){
       this.selectedMateria = m;
       this.getCurso();
     }
 
+
+    onSelectCurso(c){
+      this.selectedCurso = c;
+    }
+
     //crea una nueva grupo
-    nuevoGrupo(grupo){/*
-      this.adminGruService.addGrupo(grupo.curso)
+    nuevoGrupo(curso){
+      this.adminGruService.addGrupo(curso)
       .subscribe(
         res => {
           //refresca los grupos
           this.getGrupos();
         }
-      );*/
+      );
     }
 
 }
