@@ -2,12 +2,12 @@
 <div class="w3-row">
 
   <div class="w3-container w3-third">
-    <div>
-      <button class="w3-btn w3-blue-grey" (click)="onNuevoGrupo()">Nuevo Grupo</button>
-    </div>
-<div *ngFor="let g of grupos">
-  <button class="w3-button w3-black" (click)="onSelectGrupo(g)">{{g?.curso.materia.nombre}}</button>
-</div>
+    <p>
+      <button class="w3-btn w3-blue-grey" (click)="onNuevoGrupo()" style="width:90%">Nuevo Grupo</button>
+    </p>
+<p *ngFor="let g of grupos">
+  <button class="w3-button w3-black" (click)="onSelectGrupo(g)"style="width:90%">{{g?.curso.materia.nombre}}</button>
+</p>
   </div>
 
   <div *ngIf = "isavailable" class="w3-container w3-twothird" >

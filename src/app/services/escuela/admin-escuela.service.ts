@@ -18,7 +18,7 @@ export class AdminEscuelaService{
 
     //declaraciones del URL para las solicitudes al servidor
     private getEscuelasURL = "api/escuelas/";
-    private postEscuelaURL = "api/escuela";
+    private postEscuelaURL = "api/escuela/";
     private deleteEscuelaURL = "api/escuela/";
     private putEscuelaURL = "api/escuela/";
 

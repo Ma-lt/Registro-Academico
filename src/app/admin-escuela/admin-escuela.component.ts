@@ -27,6 +27,7 @@ export class AdminEscuelaComponent implements OnInit {
   //metodo inicial
   ngOnInit() {
   	  let usr = this.route.snapshot.parent.paramMap.get('usr');
+      console.log(usr);
       this.adminProfService.getProfesor(usr).subscribe(
         data => {
           this.profesor = data;

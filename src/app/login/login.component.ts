@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
 
   }
   nuevaEscuela(institucion:string, escuela: string){
-    this.adminEscService.addEscuela(institucion, escuela)
+    this.adminEscService.addEscuela(escuela, institucion)
     .subscribe(
       res => {
         this.getEscuelas(institucion);

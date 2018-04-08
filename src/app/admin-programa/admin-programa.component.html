@@ -3,12 +3,12 @@
 <div class="w3-row">
 
   <div class="w3-container w3-third">
-    <div>
-      <button class="w3-btn w3-blue-grey" (click)="onNuevoPrograma()">Nuevo Programa</button>
-    </div>
-<div *ngFor="let p of programasAcademicos">
-    <button class="w3-button w3-black" (click)="onSelectPrograma(p)">{{p?.nombre}}</button>
-</div>
+    <p>
+      <button class="w3-btn w3-blue-grey" (click)="onNuevoPrograma()"style="width:90%">Nuevo Programa</button>
+    </p>
+<p *ngFor="let p of programasAcademicos">
+    <button class="w3-button w3-black" (click)="onSelectPrograma(p)"style="width:90%">{{p?.nombre}}</button>
+</p>
   </div>
   <div *ngIf = "isavailable" class="w3-container w3-twothird" >
 <form #programaModificadoForm="ngForm" class="w3-container">
@@ -17,22 +17,21 @@
   value = {{selectedPrograma.nombre}} name="nombre" ngModel>
   <br>
   <button class="w3-btn w3-blue-grey" (click)="modificarPrograma(programaModificadoForm.value)">Guardar</button>
-  <br>
-  <label><b>Malla Academica:</b></label>
-  <div *ngFor="let m of selectedPrograma.malla" >
-      <button class="w3-button w3-black" (click)="onSelectMateriaBorrar(m)">{{m?.nombre}}</button>
-  </div>
+  <h2><b>Malla Academica:</b></h2>
+  <p *ngFor="let m of selectedPrograma.malla" >
+  <button class="w3-button w3-black" (click)="onSelectMateriaBorrar(m)" style="width:100%">{{m?.nombre}}</button>
+  </p>
   <label><b>{{selectedMateriaBorrar.nombre}}</b></label>
   <br>
   <button class="w3-btn w3-blue-grey" (click)="borrarMateria()">Borrar Materia</button>
 
-  <br>
+  <p>
   <select class="w3-select" (change)="onSelectMateriaAgregar($event.target.value)" name="materia">
       <option value="" disabled selected>Materia</option>
       <option value={{m._id}} *ngFor="let m of materias">{{m.nombre}}</option>
   </select>
   <button class="w3-btn w3-blue-grey" (click)="agregarMateria()">Agregar Materia</button>
-  <br>
+  </p>
   <br>
   <button class="w3-btn w3-blue-grey" (click)="borrarPrograma()">Borrar</button>
 </form>

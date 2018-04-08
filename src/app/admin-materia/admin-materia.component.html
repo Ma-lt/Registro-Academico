@@ -2,12 +2,12 @@
 <div class="w3-row">
 
   <div class="w3-container w3-third">
-    <div>
-      <button class="w3-btn w3-blue-grey" (click)="onNuevaMateria()">Nueva Materia</button>
-    </div>
-<div *ngFor="let m of materias">
-    <button class="w3-button w3-black" (click)="onSelectMateria(m)">{{m?.nombre}}</button>
-</div>
+    <p>
+      <button class="w3-btn w3-blue-grey" (click)="onNuevaMateria()"style="width:90%">Nueva Materia</button>
+    </p>
+<p *ngFor="let m of materias">
+    <button class="w3-button w3-black" (click)="onSelectMateria(m)"style="width:90%">{{m?.nombre}}</button>
+</p>
   </div>
 
   <div *ngIf = "isavailable" class="w3-container w3-twothird" >

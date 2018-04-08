@@ -2,12 +2,12 @@
 <div class="w3-row">
 
   <div class="w3-container w3-third">
-    <div>
-      <button class="w3-btn w3-blue-grey" (click)="onNuevoCurso()">Nuevo Curso</button>
-    </div>
-<div *ngFor="let c of cursos">
-    <button class="w3-button w3-black" (click)="onSelectCurso(c)">{{c?.materia.nombre}} Sem {{c?.semestre}} Año {{c?.anho}}</button>
-</div>
+    <p>
+      <button class="w3-btn w3-blue-grey" (click)="onNuevoCurso()" style="width:90%">Nuevo Curso</button>
+    </p>
+<p *ngFor="let c of cursos">
+    <button class="w3-button w3-black" (click)="onSelectCurso(c)"style="width:90%">{{c?.materia.nombre}} Sem {{c?.semestre}} Año {{c?.anho}}</button>
+</p>
   </div>
 
   <div *ngIf = "isavailable" class="w3-container w3-twothird" >

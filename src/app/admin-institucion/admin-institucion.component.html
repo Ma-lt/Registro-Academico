@@ -2,19 +2,19 @@
 <div class="w3-row">
 
   <div class="w3-container w3-third">
-    <div>
-      <button class="w3-btn w3-blue-grey" (click)="onNuevaInstitucion()">Nueva Institucion</button>
-    </div>
-<div *ngFor="let i of instituciones">
-    <button class="w3-button w3-black" (click)="onSelectInstitucion(i)">{{i?.nombre}}</button>
-</div>
+    <p>
+      <button class="w3-btn w3-blue-grey" (click)="onNuevaInstitucion()" style="width:90%" >Nueva Institucion</button>
+    </p>
+<p *ngFor="let i of instituciones">
+    <button class="w3-button w3-black" (click)="onSelectInstitucion(i)" style="width:90%">{{i?.nombre}}</button>
+</p>
   </div>
 
   <div *ngIf = "isavailable" class="w3-container w3-twothird" >
 <form #institucionModificadaForm="ngForm" class="w3-container">
   <label><b>Nombre</b></label>
   <input class="w3-input w3-border w3-light-grey" type="text"
-  value = {{selectedInstitucion.nombre}} name="nombre" ngModel>
+   [(ngModel)]="selectedInstitucion.nombre" name="nombre" ngModel>
   <br>
   <button class="w3-btn w3-blue-grey" (click)="modificarInstitucion(institucionModificadaForm.value)">Guardar</button>
   <button class="w3-btn w3-blue-grey" (click)="borrarInstitucion()">Borrar</button>
