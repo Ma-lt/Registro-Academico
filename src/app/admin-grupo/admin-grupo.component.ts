@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AdminCursoService } from '../services/curso/admin-curso.service';
 import { AdminGrupoService } from '../services/grupo/admin-grupo.service';
 import { AdminProfesorService } from '../services/profesor/admin-profesor.service';
 import { AdminMateriaService } from '../services/materia/admin-materia.service';
 import { Profesor } from '../models/profesor';
 import { Grupo } from '../models/grupo';
+import { Curso } from '../models/curso';
 import { Materia } from '../models/materia';
 
 @Component({
   selector: 'app-admin-grupo',
   templateUrl: './admin-grupo.component.html',
   styleUrls: ['./admin-grupo.component.css'],
-  providers: [AdminGrupoService, AdminProfesorService, AdminMateriaService]
+  providers: [AdminGrupoService, AdminProfesorService, AdminMateriaService,AdminCursoService]
 })
 export class AdminGrupoComponent implements OnInit {
 
-  constructor(private adminGruService: AdminGrupoService,
+  constructor(private adminCurService: AdminCursoService,
+    private adminGruService: AdminGrupoService,
     private adminProfService: AdminProfesorService,
     private adminMatService: AdminMateriaService,
     private route: ActivatedRoute, private router: Router) { }
@@ -23,7 +26,9 @@ export class AdminGrupoComponent implements OnInit {
     private profesor: Profesor;
     private institucion: string;//id de la institucion
     private grupos: Array<Grupo>;
+    private cursos: Array<Curso>;
     private materias: Array<Materia>;
+    private selectedCurso: Curso;
     private selectedMateria: Materia;
     private isavailable: boolean = false;
     private isavailableNueva: boolean = false;
@@ -60,6 +65,11 @@ export class AdminGrupoComponent implements OnInit {
   }
 
 
+    getCurso() {
+      this.adminCurService.getCursosByMateria(this.selectedMateria).subscribe( data => {
+        this.cursos = data});
+    }
+
     //muestra la pantalla de nuevo grupo
     onNuevoGrupo(){
       this.isavailable = false;
@@ -69,6 +79,7 @@ export class AdminGrupoComponent implements OnInit {
         //seleccionar materia
     onSelectMateria(m){
       this.selectedMateria = m;
+      this.getCurso();
     }
 
     //crea una nueva grupo

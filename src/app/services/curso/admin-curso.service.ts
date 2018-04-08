@@ -17,6 +17,7 @@ export class AdminCursoService {
 
   //declaraciones del URL para las solicitudes al servidor
   private getCursosURL = "api/cursos/";
+  private getCursosMateriaURL = "api/cursosM/"
   private postCursoURL = "api/curso";
   private deleteCursoURL = "api/curso/";
   private putCursoURL = "api/curso/";
@@ -45,4 +46,9 @@ export class AdminCursoService {
       curso, httpOptions);
 }
 
+  //dependiendo de una materia muestra los diferentes cursos
+  getCursosByMateria(materiaId)  {
+    return this.http.get<Curso[]>(this.getCursosURL + materiaId);
+  }
+ 
 }

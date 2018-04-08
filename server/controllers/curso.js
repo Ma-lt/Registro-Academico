@@ -143,3 +143,30 @@ module.exports.modificarUnCursoId = function(req, res){
     sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
   }
 }
+
+
+//metodo para obtener  un curso con institucion y materia
+module.exports.buscarCursosPorMateria = function(req,res){
+  console.log("BUSCANDO CURSO POR MATERIA")
+  if(req.params && req.params.materia){
+    curso
+      .find({
+        materia: req.params.materia
+      })
+      .populate('materia')
+      .exec(function(err, cursos){
+          if(!cursos){
+            sendJsonResponse(res, 404,{"message": "Cursos no encontradas"});
+            return
+          } else if (err){
+            sendJsonResponse(res,404, err);
+            return;
+          }
+          sendJsonResponse(res, 200,cursos);
+        });
+    }else{
+      sendJsonResponse(res, 404,{"message": "No hay institucion en la solicitud"});
+    }
+}
+
+
