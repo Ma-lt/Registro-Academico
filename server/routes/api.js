@@ -60,10 +60,12 @@ router.put('/materia/:id', ctrlMaterias.modificarUnaMateriaId);
 
 //cursos
 router.get('/cursos/:institucion', ctrlCursos.buscarTodosCursos);
+router.get('/cursosM/:materia',ctrlCursos.buscarCursosPorMateria)
 router.get('/curso/:id', ctrlCursos.buscarUnCursoId);
 router.post('/curso', ctrlCursos.insertarUnCurso);
 router.delete('/curso/:id', ctrlCursos.eliminarUnCursoId);
 router.put('/curso/:id', ctrlCursos.modificarUnCursoId);
+
 
 //grupos
 router.get('/grupos/:institucion', ctrlGrupos.buscarTodosGrupos);
