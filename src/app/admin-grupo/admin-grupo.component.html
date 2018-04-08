@@ -6,7 +6,7 @@
       <button class="w3-btn w3-blue-grey" (click)="onNuevoGrupo()" style="width:90%">Nuevo Grupo</button>
     </p>
 <p *ngFor="let g of grupos">
-  <button class="w3-button w3-black" (click)="onSelectGrupo(g)"style="width:90%">{{g?.curso.materia.nombre}}</button>
+  <button class="w3-button w3-black" (click)="onSelectGrupo(g)"style="width:90%">{{g?.numero}}</button>
 </p>
   </div>
 
@@ -22,7 +22,7 @@
   <label><b>Curso</b></label>
   <select class="w3-select" (change)="onSelecteCurso($event.target.value)" name="curso" ngModel>
       <option value="" disabled selected>Curso</option>
-      <option value={{c._id}} *ngFor="let c of cursos">{{c.nombre}}</option>
+      <option value={{c._id}} *ngFor="let c of cursos">{{c?.materia.nombre}} Sem {{c?.semestre}} Año {{c?.anho}}</option>
   </select>
   <br>
   <button class="w3-btn w3-blue-grey" (click)="modificarGrupo(grupoModificadoForm.value)">Guardar</button>
@@ -40,9 +40,9 @@
   </select>
   </p>
   <label><b>Curso</b></label>
-  <select class="w3-select" (change)="onSelecteCurso($event.target.value)" name="curso" ngModel>
+  <select class="w3-select" (change)="onSelectCurso($event.target.value)" name="curso" ngModel>
       <option value="" disabled selected>Curso</option>
-      <option value={{c._id}} *ngFor="let c of cursos">{{c.nombre}}</option>
+      <option value={{c._id}} *ngFor="let c of cursos">{{c?.materia.nombre}} Sem {{c?.semestre}} Año {{c?.anho}}</option>
   </select>
   <br> 
   <button class="w3-btn w3-blue-grey" (click)="nuevoGrupo(grupoNuevoForm.value)">Guardar</button>

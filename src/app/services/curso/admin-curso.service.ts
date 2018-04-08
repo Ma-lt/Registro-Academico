@@ -48,7 +48,7 @@ export class AdminCursoService {
 
   //dependiendo de una materia muestra los diferentes cursos
   getCursosByMateria(materiaId)  {
-    return this.http.get<Curso[]>(this.getCursosURL + materiaId);
+    return this.http.get<Curso[]>(this.getCursosMateriaURL + materiaId);
   }
  
 }

@@ -55,7 +55,6 @@ export class AdminGrupoComponent implements OnInit {
       this.adminGruService.getGrupos(this.institucion).subscribe(
         data => {
         this.grupos = data
-        console.log(data);
       });
 
     }
@@ -67,7 +66,9 @@ export class AdminGrupoComponent implements OnInit {
 
     getCurso() {
       this.adminCurService.getCursosByMateria(this.selectedMateria).subscribe( data => {
-        this.cursos = data});
+          this.cursos = data;
+        console.log(data);
+      });
     }
 
     //muestra la pantalla de nuevo grupo
@@ -79,7 +80,7 @@ export class AdminGrupoComponent implements OnInit {
     //seleccionar materia
     onSelectMateria(m){
       this.selectedMateria = m;
-      this.getCurso();
+        this.getCurso();
     }
 
 
@@ -89,7 +90,7 @@ export class AdminGrupoComponent implements OnInit {
 
     //crea una nueva grupo
     nuevoGrupo(curso){
-      this.adminGruService.addGrupo(curso)
+      this.adminGruService.addGrupo(curso._id)
       .subscribe(
         res => {
           //refresca los grupos
