@@ -23,6 +23,8 @@ export class AdminGrupoComponent implements OnInit {
     private profesor: Profesor;
     private institucion: string;//id de la institucion
     private grupos: Array<Grupo>;
+    private materias: Array<Materia>;
+    private selectedMateria: Materia;
     private isavailable: boolean = false;
     private isavailableNueva: boolean = false;
 
@@ -34,6 +36,7 @@ export class AdminGrupoComponent implements OnInit {
             this.profesor = data;
             this.setInstitucion(data.institucion);
             this.getGrupos();
+            this.getMaterias();
           })
     }
 
@@ -51,11 +54,21 @@ export class AdminGrupoComponent implements OnInit {
       });
 
     }
+    //refresca la lista de materias que se muestra
+    getMaterias(){
+      this.adminMatService.getMaterias(this.institucion).subscribe( data => this.materias = data);
+  }
+
 
     //muestra la pantalla de nuevo grupo
     onNuevoGrupo(){
       this.isavailable = false;
       this.isavailableNueva = true;
+    }
+
+        //seleccionar materia
+    onSelectMateria(m){
+      this.selectedMateria = m;
     }
 
     //crea una nueva grupo
