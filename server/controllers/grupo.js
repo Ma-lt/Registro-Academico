@@ -113,6 +113,7 @@ module.exports.insertarUnGrupo = function(req, res) {
 
 //metodo para borrar un grupo con ObjectId
 module.exports.eliminarUnGrupoId = function(req, res){
+  console.log("eliminar Grupo");
   if(req.params && req.params.id){
     //tiene parametos y id
     //busca un curso con ese id
@@ -126,7 +127,7 @@ module.exports.eliminarUnGrupoId = function(req, res){
 					sendJsonResponse(res,404, err);
 					return;
 				}
-        sendJsonResponse(res, 200,{"message": "Grupo eliminada"});
+        sendJsonResponse(res, 200,{"message": "Grupo eliminado"});
       })
   }
 }

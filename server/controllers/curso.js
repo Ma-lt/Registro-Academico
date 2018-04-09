@@ -22,6 +22,7 @@ module.exports.buscarTodosCursos = function(req,res){
 					institucion: req.params.institucion
 				}
 			})
+            .populate('grupos')
       .exec(function(err, cursos){
   				if(!cursos){
   					sendJsonResponse(res, 404,{"message": "Cursos no encontradas"});
@@ -127,6 +128,78 @@ module.exports.modificarUnCursoId = function(req, res){
 				cursoRes.semestre = parseInt(req.body.semestre);
 				cursoRes.anho = parseInt(req.body.anho);
 				cursoRes.materia = req.body.materia;
+
+        cursoRes.save(function(err, curso){
+          if(err){
+            console.log('Error modificando curso \n' + err);
+          }else{
+            //retorna el materia salvada
+            sendJsonResponse(res, 200, curso);
+            console.log("salva en la base de datos");
+          }
+        })
+      })
+  }else{
+    //no se envió un id
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+  }
+}
+
+module.exports.agregarGrupo = function(req, res){
+    console.log("InsertandoGrupos");
+  if(req.params && req.params.idCurso && req.params.idGrupo){
+    //tiene parametos y id
+    //busca un curso con ese id
+    curso
+      .findById(req.params.idCurso)
+      .exec(function(err, cursoRes){
+        if(!cursoRes){//si no existe, no lo encontró
+					sendJsonResponse(res, 404,{"message": "Curso no encontrada"});
+					return
+				}else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+
+        //realiza las modificaciones
+
+				cursoRes.grupos.push(req.params.idGrupo);
+
+        cursoRes.save(function(err, curso){
+          if(err){
+            console.log('Error modificando curso \n' + err);
+          }else{
+            //retorna el materia salvada
+            sendJsonResponse(res, 200, curso);
+            console.log("salva en la base de datos");
+          }
+        })
+      })
+  }else{
+    //no se envió un id
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+  }
+}
+
+module.exports.eliminarGrupo = function(req, res){
+    console.log("Elminando Grupos");
+  if(req.params && req.params.idCurso && req.params.idGrupo){
+    //tiene parametos y id
+    //busca un curso con ese id
+    curso
+      .findById(req.params.idCurso)
+      .exec(function(err, cursoRes){
+        if(!cursoRes){//si no existe, no lo encontró
+					sendJsonResponse(res, 404,{"message": "Curso no encontrada"});
+					return
+				}else if (err){//si ocurre un error, envia el error
+					sendJsonResponse(res,404, err);
+					return;
+				}
+
+        //realiza las modificaciones
+
+				cursoRes.grupos.pull(req.params.idGrupo);
 
         cursoRes.save(function(err, curso){
           if(err){

@@ -3,36 +3,31 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AdminCursoService } from '../services/curso/admin-curso.service';
 import { AdminGrupoService } from '../services/grupo/admin-grupo.service';
 import { AdminProfesorService } from '../services/profesor/admin-profesor.service';
-import { AdminMateriaService } from '../services/materia/admin-materia.service';
 import { Profesor } from '../models/profesor';
 import { Grupo } from '../models/grupo';
 import { Curso } from '../models/curso';
-import { Materia } from '../models/materia';
 
 @Component({
   selector: 'app-admin-grupo',
   templateUrl: './admin-grupo.component.html',
   styleUrls: ['./admin-grupo.component.css'],
-  providers: [AdminGrupoService, AdminProfesorService, AdminMateriaService,AdminCursoService]
+  providers: [AdminGrupoService, AdminProfesorService, AdminCursoService]
 })
 export class AdminGrupoComponent implements OnInit {
 
   constructor(private adminCurService: AdminCursoService,
     private adminGruService: AdminGrupoService,
     private adminProfService: AdminProfesorService,
-    private adminMatService: AdminMateriaService,
     private route: ActivatedRoute, private router: Router) { }
 
     private profesor: Profesor;
     private institucion: string;//id de la institucion
     private grupos: Array<Grupo>;
     private cursos: Array<Curso>;
-    private materias: Array<Materia>;
-    private selectedCurso: Curso;
-    private selectedMateria: Materia;
+    private selectedCurso: string;
+    private selectedGrupo: Grupo;
     private isavailable: boolean = false;
     private isavailableNueva: boolean = false;
-
     //metodo inicial
     ngOnInit() {
         let usr = this.route.snapshot.parent.paramMap.get('usr');
@@ -40,8 +35,7 @@ export class AdminGrupoComponent implements OnInit {
           data => {
             this.profesor = data;
             this.setInstitucion(data.institucion);
-            this.getGrupos();
-            this.getMaterias();
+            this.getCursos();
           })
     }
 
@@ -50,53 +44,59 @@ export class AdminGrupoComponent implements OnInit {
       this.institucion = institucion._id;
     }
 
+    getCursos(){
+      this.adminCurService.getCursos(this.institucion).subscribe( data => {
+          this.cursos = data;
+          this.getGrupos();
+
+        });
+    }
     //refresca la lista de grupos que se muestra
     getGrupos(){
-      this.adminGruService.getGrupos(this.institucion).subscribe(
-        data => {
-        this.grupos = data
-      });
+        if(this.selectedCurso != null){
 
+            for(let curso of this.cursos){
+                if(curso._id == this.selectedCurso){
+                    this.grupos = curso.grupos;
+                }
+            }
+        }
+        
     }
-    //refresca la lista de materias que se muestra
-    getMaterias(){
-      this.adminMatService.getMaterias(this.institucion).subscribe( data => this.materias = data);
-  }
-
-
-    getCurso() {
-      this.adminCurService.getCursosByMateria(this.selectedMateria).subscribe( data => {
-          this.cursos = data;
-        console.log(data);
-      });
-    }
-
-    //muestra la pantalla de nuevo grupo
-    onNuevoGrupo(){
-      this.isavailable = false;
-      this.isavailableNueva = true;
-    }
-
-    //seleccionar materia
-    onSelectMateria(m){
-      this.selectedMateria = m;
-        this.getCurso();
-    }
-
 
     onSelectCurso(c){
       this.selectedCurso = c;
+      this.getGrupos();
     }
 
-    //crea una nueva grupo
-    nuevoGrupo(curso){
-      this.adminGruService.addGrupo(curso._id)
+        //crea una nueva grupo
+    nuevoGrupo(){
+      this.adminGruService.addGrupo(this.selectedCurso)
       .subscribe(
         res => {
-          //refresca los grupos
-          this.getGrupos();
-        }
-      );
+      //refresca los grupos
+        this.adminCurService.agregarGrupo(this.selectedCurso, res._id)
+                .subscribe(response => {
+                this.getCursos();
+                });
+        });
+    }
+
+    onSelectGrupo(g){
+        this.selectedGrupo = g;
+        this.isavailable = true;
+    }
+
+    borrarGrupo(){
+        this.adminGruService.deleteGrupo(this.selectedGrupo._id)
+            .subscribe(
+                res => {
+                    console.log(res);
+                    this.adminCurService.eliminarGrupo(this.selectedCurso, this.selectedGrupo._id)
+                        .subscribe(response =>{
+                            this.getCursos();
+                        });
+                });
     }
 
 }

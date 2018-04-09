@@ -21,6 +21,7 @@ export class AdminCursoService {
   private postCursoURL = "api/curso";
   private deleteCursoURL = "api/curso/";
   private putCursoURL = "api/curso/";
+  private putCursoBURL = "api/cursoB/";
 
   constructor(private http: HttpClient) { } //se inyecta el modulo http para las realizar las solicitudes al API
 
@@ -44,8 +45,17 @@ export class AdminCursoService {
   modifyCurso(cursoId, curso){
     return this.http.put<Curso>(this.putCursoURL+cursoId,
       curso, httpOptions);
-}
+  }
 
+  agregarGrupo(cursoId, grupoId){
+      return this.http.put<Curso>(this.putCursoURL + cursoId + '/' + grupoId, httpOptions);
+  }
+
+  eliminarGrupo(cursoId, grupoId){
+      console.log(cursoId);
+      console.log(grupoId);
+      return this.http.put<Curso>(this.putCursoBURL + cursoId + '/' + grupoId, httpOptions);
+  }
   //dependiendo de una materia muestra los diferentes cursos
   getCursosByMateria(materiaId)  {
     return this.http.get<Curso[]>(this.getCursosMateriaURL + materiaId);
