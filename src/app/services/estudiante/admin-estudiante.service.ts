@@ -16,6 +16,7 @@ export class AdminEstudianteService {
   //declaraciones del URL para las solicitudes al servidor
   private postEstudianteURL = "api/estudiante";
   private getEstudianteURL = "api/estudiante/";
+  private putEstudianteURL = "api/estudiante/";
 
   constructor(private http: HttpClient) { } //se inyecta el modulo http para las realizar las solicitudes al API
 
@@ -29,4 +30,9 @@ export class AdminEstudianteService {
       return this.http.post<Estudiante>(this.postEstudianteURL, estudiante, httpOptions);
   }
 
+  //modificar un estudiante
+  modifyEstudiante(estudianteId, estudiante){
+    return this.http.put<Estudiante>(this.putEstudianteURL+estudianteId,
+      estudiante, httpOptions);
+}
 }

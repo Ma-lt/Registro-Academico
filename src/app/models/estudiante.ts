@@ -4,6 +4,7 @@ export class Estudiante {
     apellidos: string;
     carnet: number;
     institucion: string;
+    escuela: string;
     programaAcademico: string;
     usuario: string;
     clave: string

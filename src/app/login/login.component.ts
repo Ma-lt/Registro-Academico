@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
     /*llama el metodo addEstudiante del serivicio
      * pasandole el estudiante que obtiene desde
      * la interfaz*/
+    console.log(estudiante);
     this.adminEstService.addEstudiante(estudiante)
     .subscribe();
   }
@@ -87,13 +88,15 @@ export class LoginComponent implements OnInit {
       this.adminEscService.getEscuelas(id).subscribe(data => this.escuelas = data); //mapea los datos recibidos a la lista de escuelas
   }
 
-    onSelectInstitucion(id: string){
+  onSelectInstitucion(id: string){
       this.idInstitucion = id;
       this.getEscuelas(id);
   }
 
   onSelectEscuela(idEscuela: string){
-      this.adminProgService.getProgramasAcademicos(idEscuela, this.idInstitucion).subscribe(data=> this.programasAcademicos = data); //mapea los datos recibidos a la lista de programas
+      this.adminProgService.getProgramasAcademicos(this.idInstitucion, idEscuela).subscribe(data=> {
+        this.programasAcademicos = data
+      }); //mapea los datos recibidos a la lista de programas
   }
 
   onSubmitLogin(usuario){
@@ -114,7 +117,7 @@ export class LoginComponent implements OnInit {
       if (tipo == "estudiante"){
           this.adminEstService.getEstudiante(usuario.usuario).subscribe(data =>{
               if(data.clave == usuario.clave){
-                    this.router.navigate(['/estudiantes'+data.usuario]);
+                    this.router.navigate(['/estudiante/'+data.usuario]);
               }else{
                   alert('Usuario o contraseña invalidos')
               };

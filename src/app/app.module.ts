@@ -18,6 +18,8 @@ import { AdminMateriaComponent } from './admin-materia/admin-materia.component';
 import { AdminCursoComponent } from './admin-curso/admin-curso.component';
 import { AdminGrupoComponent } from './admin-grupo/admin-grupo.component';
 import { MainEstudianteComponent } from './main-estudiante/main-estudiante.component';
+import { CursosMatriculadosComponent } from './cursos-matriculados/cursos-matriculados.component';
+import { AdminEstudianteComponent } from './admin-estudiante/admin-estudiante.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { MainEstudianteComponent } from './main-estudiante/main-estudiante.compo
     AdminMateriaComponent,
     AdminCursoComponent,
     AdminGrupoComponent,
-    MainEstudianteComponent
+    MainEstudianteComponent,
+    CursosMatriculadosComponent,
+    AdminEstudianteComponent
   ],
   imports: [
     BrowserModule,

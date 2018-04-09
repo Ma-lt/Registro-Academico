@@ -56,43 +56,23 @@ module.exports.insertarUnEstudiante = function(req, res){
 
 	newEstudiante.carnet = 1; //cambiar despues
 
-	//asigna el nombre de institucion en una variable
-  var institucion = req.body.institucion;
-  //crea un query para recuperar el ObjectId
-  var query = getInstitucionID(institucion);
-  //ejecuta el query
-	query.exec(function(err, institucionRes) {
-    if (err){
-      console.log(err);
-      return;
+	//asigna el id de la institucion
+  newEstudiante.institucion = req.body.institucion;
+	newEstudiante.escuela = req.body.escuela;
+	newEstudiante.programaAcademico = req.body.programaAcademico;
+  //guarda el usuario y clave
+  newEstudiante.usuario = req.body.usuario;
+  newEstudiante.clave = req.body.clave;
+  //salva el estudiante en la base de datos
+  newEstudiante.save(function(err, estudiante) {
+    if (err) {
+      console.log('Error insertando estudante \n' + err);
+    }else{
+      //retorna el estudiante salvado
+      sendJsonResponse(res, 200, estudiante);
+			console.log("salva en la base de datos");
     }
-		//asigna el ObjectId
-    newEstudiante.institucion = institucionRes._id;
-    //asigna el nombre del programa academico a una variable
-    var programaAcademico = req.body.programaAcademico;
-    //crea un query para recuperar el ObjectId
-    var query2 = getProgramaAcademicoID(programaAcademico, institucionRes._id);
-    //ejecuta el query
-		query2.exec(function(err, programaRes){
-      if(err)
-        return console.log(err);
-      //asigna el ObjectId
-      newEstudiante.programaAcademico = programaRes._id;
-      //guarda el usuario y clave
-      newEstudiante.usuario = req.body.usuario;
-      newEstudiante.clave = req.body.clave;
-      //salva el estudiante en la base de datos
-      newEstudiante.save(function(err, estudiante) {
-        if (err) {
-          console.log('Error insertando estudante \n' + err);
-        }else{
-          //retorna el estudiante salvado
-          sendJsonResponse(res, 200, estudiante);
-					console.log("salva en la base de datos");
-        }
-      })
-		})
-	})
+  })
 }
 
 
@@ -148,40 +128,26 @@ module.exports.modificarUnEstudianteId = function(req, res){
 				estudianteRes.nombre = req.body.nombre;
 				estudianteRes.apellidos = req.body.apellidos;
 
-				//asigna el nombre de institucion en una variable
-			  var institucion = req.body.institucion;
-			  //crea un query para recuperar el ObjectId
-			  var query = getInstitucionID(institucion);
-			  //ejecuta el query
-				query.exec(function(err, institucionRes) {
-			    if (err){
-			      console.log(err);
-			      return;
+				estudianteRes.carnet = 1; //cambiar despues
+
+				//asigna el id de la institucion
+			  estudianteRes.institucion = req.body.institucion;
+				estudianteRes.escuela = req.body.escuela;
+				estudianteRes.programaAcademico = req.body.programaAcademico;
+			  //guarda el usuario y clave
+			  estudianteRes.usuario = req.body.usuario;
+			  estudianteRes.clave = req.body.clave;
+			  //salva el estudiante en la base de datos
+			  estudianteRes.save(function(err, estudiante) {
+			    if (err) {
+			      console.log('Error insertando estudante \n' + err);
+			    }else{
+			      //retorna el estudiante salvado
+			      sendJsonResponse(res, 200, estudiante);
+						console.log("salva en la base de datos");
 			    }
-					//asigna el ObjectId
-			    estudianteRes.institucion = institucionRes._id;
-			    //asigna el nombre del programaAcademico a una variable
-			    var programaAcademico = req.body.programaAcademico;
-			    //crea un query para recuperar el ObjectId
-			    var query2 = getProgramaAcademicoID(programaAcademico, institucionRes._id);
-			    query2.exec(function(err, programaRes) {
-		        estudianteRes.programaAcademico = programaRes._id;
-		        //asigna usuario y clave sin ningun cambio
-		        estudianteRes.usuario = req.body.usuario;
-		        estudianteRes.clave = req.body.clave;
-		        //salva el estudiante en la base de datos
-		        estudianteRes.save(function(err, estudiante) {
-		          if (err) {
-		            console.log('Error modificando estudante \n' + err);
-		          }else{
-		            //retorna el estudiante salvado
-		            sendJsonResponse(res, 200, estudiante);
-								console.log("salva en la base de datos");
-		          }
-		        })
-					})
-				})
-			});
+			  })
+			})
 	}else{
     //no se envió un usuario
 		sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
