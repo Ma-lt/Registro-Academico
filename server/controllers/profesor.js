@@ -181,7 +181,7 @@ module.exports.modificarUnProfesorId = function(req, res){
     //tiene parametos y id
     //busca un profesor con ese usuario
 
-    estudiante
+    profesor
       .findById(req.params.id)
       .exec(function(err, profesorRes){
         if(!profesorRes){//si no existe, no lo encontró
