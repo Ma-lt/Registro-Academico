@@ -166,3 +166,26 @@ module.exports.modificarUnGrupoId = function(req, res){
     sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
   }
 }
+
+module.exports.matricularEstudiante = function(req, res){
+	if(req.params && req.params.id){
+		grupo
+      .findById(req.params.id)
+      .exec(function(err, grupoRes){
+				//agrega el estudiante a los estudiantes matriculados
+				grupoRes.estudiantes.push(req.body.estudiante);
+				grupoRes.save(function(err, grupo){
+          if(err){
+            console.log('Error matriculando estudiante en el grupo \n' + err);
+          }else{
+            //retorna el materia salvada
+            sendJsonResponse(res, 200, grupo);
+            console.log("salva en la base de datos");
+          }
+        })
+			})
+	}else{
+    //no se envió un id
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+  }
+}

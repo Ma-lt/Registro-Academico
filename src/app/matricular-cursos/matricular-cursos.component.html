@@ -1,0 +1,17 @@
+<label><b>Programa Academico: {{estudiante.programaAcademico.nombre}}</b></label>
+<br>
+<form #grupoMatricularForm="ngForm" class="w3-container">
+  <p>
+  <select class="w3-select" (change)="onSelectCurso($event.target.value)" name="curso" ngModel >
+      <option value="" disabled selected>Curso</option>
+      <option value={{c._id}} *ngFor="let c of cursos">{{c?.materia.nombre}} Sem {{c?.semestre}} Año {{c?.anho}}</option>
+  </select>
+  </p>
+  <p>
+  <select class="w3-select" name="grupo" ngModel >
+      <option value="" disabled selected>Grupo</option>
+      <option value={{g._id}} *ngFor="let g of grupos">Grupo {{g.numero}}</option>
+  </select>
+  </p>
+  <button class="w3-btn w3-blue-grey" (click)="matricularGrupo(grupoMatricularForm.value)">Matricular</button>
+</form>

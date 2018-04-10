@@ -17,6 +17,7 @@ export class AdminCursoService {
 
   //declaraciones del URL para las solicitudes al servidor
   private getCursosURL = "api/cursos/";
+  private getCursoURL = "api/curso/";
   private getCursosMateriaURL = "api/cursosM/"
   private postCursoURL = "api/curso";
   private deleteCursoURL = "api/curso/";
@@ -28,6 +29,12 @@ export class AdminCursoService {
   //recupera todas las escuelas de la institucion
   getCursos(institucionId){
     return this.http.get<Curso[]>(this.getCursosURL + institucionId);
+  }
+
+  //recupera un curso
+  getCurso(cursoId){
+    console.log("get curso en service");
+    return this.http.get<Curso>(this.getCursoURL + cursoId);
   }
 
   //agrega un curso a la base de datos
@@ -60,5 +67,5 @@ export class AdminCursoService {
   getCursosByMateria(materiaId)  {
     return this.http.get<Curso[]>(this.getCursosMateriaURL + materiaId);
   }
- 
+
 }

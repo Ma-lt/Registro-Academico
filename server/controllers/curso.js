@@ -46,7 +46,7 @@ module.exports.buscarUnCursoId = function(req, res){
     curso
       .findById(req.params.id)
 			.populate('materia')
-			.populate('grupo')
+			.populate('grupos')
       .exec(function(err, cursoRes){
         if(!cursoRes){//si no existe, no lo encontró
           sendJsonResponse(res, 404,{"message": "Curso no encontrado"});
@@ -241,5 +241,3 @@ module.exports.buscarCursosPorMateria = function(req,res){
       sendJsonResponse(res, 404,{"message": "No hay institucion en la solicitud"});
     }
 }
-
-

@@ -74,6 +74,7 @@ router.get('/grupo/:id', ctrlGrupos.buscarUnGrupoId);
 router.post('/grupo', ctrlGrupos.insertarUnGrupo);
 router.delete('/grupo/:id', ctrlGrupos.eliminarUnGrupoId);
 router.put('/grupo/:id', ctrlGrupos.modificarUnGrupoId);
+router.put('/grupoEst/:id', ctrlGrupos.matricularEstudiante);
 
 //exporta el api
 module.exports = router;

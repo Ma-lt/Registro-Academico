@@ -19,6 +19,7 @@ export class AdminGrupoService {
   private getGruposURL = "api/grupos/";
   private postGrupoURL = "api/grupo";
   private deleteGrupoURL = "api/grupo/";
+  private putGrupoEstURL = "api/grupoEst/";
 
   constructor(private http: HttpClient) { } //se inyecta el modulo http para las realizar las solicitudes al API
 
@@ -33,9 +34,14 @@ export class AdminGrupoService {
       {"curso" : cursoId}, httpOptions);
   }
 
+  //borra un grupo
   deleteGrupo(grupoId){
-      console.log("elimnarGrupo");
       return this.http.delete<Grupo>(this.deleteGrupoURL+grupoId);
   }
 
+  //matricula un estudiante en un grupo
+  matricularEstudiante(grupoId, estudianteId){
+    return this.http.put<Grupo>(this.putGrupoEstURL+grupoId,
+    {"estudiante": estudianteId}, httpOptions);
+  }
 }
