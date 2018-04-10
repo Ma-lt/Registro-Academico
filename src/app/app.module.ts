@@ -21,6 +21,7 @@ import { MainEstudianteComponent } from './main-estudiante/main-estudiante.compo
 import { CursosMatriculadosComponent } from './cursos-matriculados/cursos-matriculados.component';
 import { AdminEstudianteComponent } from './admin-estudiante/admin-estudiante.component';
 import { MatricularCursosComponent } from './matricular-cursos/matricular-cursos.component';
+import { EditProfesorComponent } from './edit-profesor/edit-profesor.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { MatricularCursosComponent } from './matricular-cursos/matricular-cursos
     MainEstudianteComponent,
     CursosMatriculadosComponent,
     AdminEstudianteComponent,
-    MatricularCursosComponent
+    MatricularCursosComponent,
+    EditProfesorComponent
   ],
   imports: [
     BrowserModule,

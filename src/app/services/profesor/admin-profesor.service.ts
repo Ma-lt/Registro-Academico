@@ -16,6 +16,7 @@ export class AdminProfesorService {
   //declaraciones del URL para las solicitudes al servidor
   private postProfesorURL = "api/profesor";
   private getProfesorURL = "api/profesor/";
+  private putProfesorURL = "api/profesor/";
 
   constructor(private http: HttpClient) { } //se inyecta el modulo http para las realizar las solicitudes al API
 
@@ -28,5 +29,11 @@ export class AdminProfesorService {
   addProfesor(profesor: Profesor):Observable<Profesor>{
       return this.http.post<Profesor>(this.postProfesorURL, profesor, httpOptions);
   }
+
+  //modificar un estudiante
+  modifyProfesor(profesorID, profesor){
+    return this.http.put<Profesor>(this.putProfesorURL+profesorID,
+      profesor, httpOptions);
+}
 
 }

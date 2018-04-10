@@ -64,6 +64,7 @@ export class AdminMateriaComponent implements OnInit {
 
     //crea una nueva materia
     nuevaMateria(materia: string){
+      console.log(this.institucion)
       this.adminMatService.addMateria(materia, this.institucion)
       .subscribe(
         res => {

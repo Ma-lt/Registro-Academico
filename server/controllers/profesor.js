@@ -176,6 +176,54 @@ module.exports.modificarUnProfesorId = function(req,res) {
   }
 }
 
+module.exports.modificarUnProfesorId = function(req, res){
+  if(req.params && req.params.id){
+    //tiene parametos y id
+    //busca un profesor con ese usuario
+
+    estudiante
+      .findById(req.params.id)
+      .exec(function(err, profesorRes){
+        if(!profesorRes){//si no existe, no lo encontró
+          sendJsonResponse(res, 404,{"message": "Profesor no encontrado"});
+          return
+        }else if (err){//si ocurre un error, envia el error
+          sendJsonResponse(res,404, err);
+          return;
+        }
+
+        //realiza las modificaciones
+        //asigna nombre y apellido sin ningun cambio
+        profesorRes.nombre = req.body.nombre;
+        profesorRes.apellidos = req.body.apellidos;
+
+        profesorRes.carnet = 1; //cambiar despues
+
+        //asigna el id de la institucion
+        profesorRes.institucion = req.body.institucion;
+        profesorRes.escuela = req.body.escuela;
+        //guarda el usuario y clave
+        profesorRes.usuario = req.body.usuario;
+        profesorRes.clave = req.body.clave;
+        //salva el profesor en la base de datos
+        profesorRes.save(function(err, profesor) {
+          if (err) {
+            console.log('Error insertando profesor \n' + err);
+          }else{
+            //retorna el profesor salvado
+            sendJsonResponse(res, 200, profesor);
+            console.log("salva en la base de datos");
+          }
+        })
+      })
+  }else{
+    //no se envió un usuario
+    sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
+    }
+}
+
+
+
 //metodo para buscar un profesor con un usuario
 module.exports.leerUnProfesorUsuario = function (req, res) {
 	if(req.params && req.params.usuario){

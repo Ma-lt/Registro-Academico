@@ -7,6 +7,7 @@ import { AdminEscuelaComponent } from '../admin-escuela/admin-escuela.component'
 import { AdminGrupoComponent } from '../admin-grupo/admin-grupo.component';
 import { AdminMateriaComponent } from '../admin-materia/admin-materia.component';
 import { AdminProgramaComponent } from '../admin-programa/admin-programa.component';
+import { EditProfesorComponent } from '../edit-profesor/edit-profesor.component';
 
 const mainProfesorRoutes: Routes = [
     { path: 'profesor/:usr', component: MainProfesorComponent,
@@ -17,6 +18,7 @@ const mainProfesorRoutes: Routes = [
           { path: 'adminGrupo', component: AdminGrupoComponent },         
           { path: 'adminMateria', component: AdminMateriaComponent },         
           { path: 'adminPrograma', component: AdminProgramaComponent },         
+          { path: 'editProfesor', component: EditProfesorComponent }         
       ]
     }
 ]

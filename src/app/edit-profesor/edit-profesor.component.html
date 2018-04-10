@@ -1,0 +1,28 @@
+<div class="w3-container w3-white w3-padding-16">
+    <form  #profesorForm="ngForm" (ngSubmit)="onSubmitModificarProfesor(profesorForm.value)" class="w3-container">
+
+    <input class="w3-input" type="text" value = {{profesor.nombre}} placeholder="Nombre" name="nombre" ngModel>
+
+    <input class="w3-input" type="text" value = {{profesor.apellidos}} placeholder="Apellidos" name="apellidos" ngModel>
+    <p>
+    <select class="w3-select" (change)="onSelectInstitucion($event.target.value)" name="institucion" ngModel >
+        <option value="" disabled selected>Institucion</option>
+        <option value={{i._id}} *ngFor="let i of instituciones">{{i.nombre}}</option>
+    </select>
+    </p>
+    <p>
+    <select class="w3-select" (change)="onSelectEscuela($event.target.value)" name="escuela" ngModel>
+        <option value="" disabled selected>Escuela</option>
+        <option value="{{e._id}}" *ngFor="let e of escuelas">{{e.nombre}}</option>
+    </select>
+    </p>
+    <input class="w3-input" type="text" value = {{profesor.usuario}} placeholder="Usuario" name="usuario" ngModel>
+
+    <input class="w3-input" type="text" value = {{profesor.clave}} placeholder="Contraseña" name="clave" ngModel>
+
+    <p>
+    <input type="submit" class="w3-btn w3-red w3-right" value="Guardar Cambios">
+    </p>
+
+    </form>
+</div>
