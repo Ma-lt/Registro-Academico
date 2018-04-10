@@ -76,6 +76,10 @@ export class AdminInstitucionComponent implements OnInit {
 
   //modifcar una institucion
   modificarInstitucion(institucionNueva){
+    if (institucionNueva.nombre =="")
+      institucionNueva.nombre = this.selectedInstitucion.nombre;
+
+
     console.log(this.selectedInstitucion);
     this.adminInsService.modifyInstitucion(this.selectedInstitucion._id, institucionNueva.nombre)
      .subscribe(

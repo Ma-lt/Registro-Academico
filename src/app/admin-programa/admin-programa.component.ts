@@ -135,6 +135,10 @@ export class AdminProgramaComponent implements OnInit {
 
   //modifcar un programa
   modificarPrograma(programaNuevo){
+
+    if (programaNuevo.nombre == "")
+      programaNuevo.nombre = this.selectedPrograma.nombre;
+
     this.adminProgService.modifyProgramaAcademico(this.selectedPrograma._id, programaNuevo.nombre)
      .subscribe(
        res => {

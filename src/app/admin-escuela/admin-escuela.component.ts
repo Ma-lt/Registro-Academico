@@ -88,6 +88,10 @@ borrarEscuela(){
 
 //modifcar una escuela
 modificarEscuela(escuelaNueva){
+
+  if (escuelaNueva.nombre == "")
+    escuelaNueva.nombre = this.selectedEscuela.nombre;
+
   this.adminEscService.modifyEscuela(this.selectedEscuela._id, escuelaNueva.nombre)
    .subscribe(
      res => {

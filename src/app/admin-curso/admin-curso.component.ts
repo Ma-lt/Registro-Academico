@@ -119,6 +119,14 @@ export class AdminCursoComponent implements OnInit {
 
     //modificar un curso
     modificarCurso(curso){
+
+      if (curso.materia == "")
+        curso.materia = this.materias;
+      if (curso.anho == "")
+        curso.anho = this.selectedAnhoStr;
+      if (curso.semestre == "")
+        curso.semestre = this.selectedSemestreStr;
+      
       this.adminCurService.modifyCurso(this.selectedCurso._id, curso)
       .subscribe(
         res =>{

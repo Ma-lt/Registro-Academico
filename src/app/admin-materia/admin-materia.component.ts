@@ -90,6 +90,10 @@ export class AdminMateriaComponent implements OnInit {
 
   //modifcar una materia
   modificarMateria(materiaNueva){
+
+    if (materiaNueva.nombre == "")
+      materiaNueva.nombre = this.selectedMateria.nombre;
+
     console.log(this.selectedMateria);
     this.adminMatService.modifyMateria(this.selectedMateria._id, materiaNueva.nombre)
      .subscribe(
