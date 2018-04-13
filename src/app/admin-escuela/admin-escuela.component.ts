@@ -9,14 +9,16 @@ import { Escuela } from '../models/escuela';
   selector: 'app-admin-escuela',
   templateUrl: './admin-escuela.component.html',
   styleUrls: ['./admin-escuela.component.css'],
-  providers: [AdminEscuelaService, AdminProfesorService]
+  providers: [AdminEscuelaService, AdminProfesorService]//servicios que utiliza
 })
 export class AdminEscuelaComponent implements OnInit {
 
+  //constructor inicializa todos los servicios
   constructor(private adminEscService: AdminEscuelaService,
     private adminProfService: AdminProfesorService,
     private route: ActivatedRoute, private router: Router) { }
 
+    //definicion de todas las variables de html
   private profesor: Profesor;
   private institucion: string;//id de la institucion
   private escuelas: Array<Escuela>;

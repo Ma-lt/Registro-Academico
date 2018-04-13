@@ -14,6 +14,7 @@ var sendJsonResponse = function(res, status, content) {
 //metodo para buscar todas los cursos de una institucion
 module.exports.buscarTodosCursos = function(req,res){
   if(req.params && req.params.institucion){
+		//tiene parametros e institucion
     curso
       .find({})
 			.populate({
@@ -22,18 +23,19 @@ module.exports.buscarTodosCursos = function(req,res){
 					institucion: req.params.institucion
 				}
 			})
-            .populate('grupos')
+      .populate('grupos')
       .exec(function(err, cursos){
-  				if(!cursos){
+  				if(!cursos){//si no retorna los cursos
   					sendJsonResponse(res, 404,{"message": "Cursos no encontradas"});
   					return
-  				} else if (err){
+  				} else if (err){//si hay un erro
   					sendJsonResponse(res,404, err);
   					return;
   				}
+					//todo sale bien
   				sendJsonResponse(res, 200,cursos);
   			});
-    }else{
+    }else{//no hay institucion
       sendJsonResponse(res, 404,{"message": "No hay institucion en la solicitud"});
     }
 }
@@ -44,7 +46,7 @@ module.exports.buscarUnCursoId = function(req, res){
     //tiene parametos y id
     //busca un curso con ese id
     curso
-      .findById(req.params.id)
+      .findById(req.params.id)//busca el curso
 			.populate('materia')
 			.populate('grupos')
       .exec(function(err, cursoRes){
@@ -76,10 +78,11 @@ module.exports.insertarUnCurso = function(req, res) {
 	newCurso.anho = parseInt(req.body.anho);
 	newCurso.materia = req.body.materia;
 
+	//salva el nuevo curso
   newCurso.save(function(err, curso){
-    if (err) {
+    if (err) {//si hay errores
       console.log('Error insertando curso \n' + err);
-    }else{
+    }else{//no hay errores
       //retorna el estudiante salvado
       sendJsonResponse(res, 200, curso);
       console.log("salva en la base de datos");
@@ -93,7 +96,7 @@ module.exports.eliminarUnCursoId = function(req, res){
     //tiene parametos y id
     //busca un curso con ese id
     curso
-      .remove({"_id": req.params.id})
+      .remove({"_id": req.params.id})//busca el curso y lo borra
       .exec(function(err, cursoRes){
         if(!cursoRes){//si no existe, no lo encontró
           sendJsonResponse(res, 404,{"message": "Curso no encontrado"});
@@ -102,6 +105,7 @@ module.exports.eliminarUnCursoId = function(req, res){
 					sendJsonResponse(res,404, err);
 					return;
 				}
+				//borra el curso debidamente
         sendJsonResponse(res, 200,{"message": "Curso eliminada"});
       })
   }
@@ -113,7 +117,7 @@ module.exports.modificarUnCursoId = function(req, res){
     //tiene parametos y id
     //busca un curso con ese id
     curso
-      .findById(req.params.id)
+      .findById(req.params.id)//busca el curso con el id
       .exec(function(err, cursoRes){
         if(!cursoRes){//si no existe, no lo encontró
 					sendJsonResponse(res, 404,{"message": "Curso no encontrada"});
@@ -124,13 +128,12 @@ module.exports.modificarUnCursoId = function(req, res){
 				}
 
         //realiza las modificaciones
-
 				cursoRes.semestre = parseInt(req.body.semestre);
 				cursoRes.anho = parseInt(req.body.anho);
 				cursoRes.materia = req.body.materia;
-
+				//salva las modificaciones
         cursoRes.save(function(err, curso){
-          if(err){
+          if(err){//si ocurre un error
             console.log('Error modificando curso \n' + err);
           }else{
             //retorna el materia salvada
@@ -145,13 +148,14 @@ module.exports.modificarUnCursoId = function(req, res){
   }
 }
 
+//agrega un grupo a un curso
 module.exports.agregarGrupo = function(req, res){
     console.log("InsertandoGrupos");
   if(req.params && req.params.idCurso && req.params.idGrupo){
     //tiene parametos y id
     //busca un curso con ese id
     curso
-      .findById(req.params.idCurso)
+      .findById(req.params.idCurso)//busca el curso por id
       .exec(function(err, cursoRes){
         if(!cursoRes){//si no existe, no lo encontró
 					sendJsonResponse(res, 404,{"message": "Curso no encontrada"});
@@ -161,12 +165,11 @@ module.exports.agregarGrupo = function(req, res){
 					return;
 				}
 
-        //realiza las modificaciones
-
+        //agrega un grupo al curso
 				cursoRes.grupos.push(req.params.idGrupo);
-
+				//salva el curso con el nuevo grupo
         cursoRes.save(function(err, curso){
-          if(err){
+          if(err){//si hay errores
             console.log('Error modificando curso \n' + err);
           }else{
             //retorna el materia salvada
@@ -180,14 +183,14 @@ module.exports.agregarGrupo = function(req, res){
     sendJsonResponse(res, 404,{"message": "No hay id en la solicitud"});
   }
 }
-
+//elimina a un grupo de un curso
 module.exports.eliminarGrupo = function(req, res){
     console.log("Elminando Grupos");
   if(req.params && req.params.idCurso && req.params.idGrupo){
     //tiene parametos y id
     //busca un curso con ese id
     curso
-      .findById(req.params.idCurso)
+      .findById(req.params.idCurso)//busca el curso por id
       .exec(function(err, cursoRes){
         if(!cursoRes){//si no existe, no lo encontró
 					sendJsonResponse(res, 404,{"message": "Curso no encontrada"});
@@ -197,12 +200,11 @@ module.exports.eliminarGrupo = function(req, res){
 					return;
 				}
 
-        //realiza las modificaciones
-
+        //saca el grupo de la lista de grupos
 				cursoRes.grupos.pull(req.params.idGrupo);
-
+				//salva el curso con las modiicaciones
         cursoRes.save(function(err, curso){
-          if(err){
+          if(err){//si hay errores
             console.log('Error modificando curso \n' + err);
           }else{
             //retorna el materia salvada
@@ -222,16 +224,16 @@ module.exports.eliminarGrupo = function(req, res){
 module.exports.buscarCursosPorMateria = function(req,res){
   console.log("BUSCANDO CURSO POR MATERIA")
   if(req.params && req.params.materia){
-    curso
+    curso//busca el curso por materia
       .find({
         materia: req.params.materia
       })
       .populate('materia')
       .exec(function(err, cursos){
-          if(!cursos){
+          if(!cursos){//si no retorna ningun curso
             sendJsonResponse(res, 404,{"message": "Cursos no encontradas"});
             return
-          } else if (err){
+          } else if (err){//si hay errores
             sendJsonResponse(res,404, err);
             return;
           }

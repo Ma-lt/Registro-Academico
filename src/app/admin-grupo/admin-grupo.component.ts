@@ -12,14 +12,15 @@ import { Curso } from '../models/curso';
   templateUrl: './admin-grupo.component.html',
   styleUrls: ['./admin-grupo.component.css'],
   providers: [AdminGrupoService, AdminProfesorService, AdminCursoService]
+   //en este array se deben insertar los servicios que utiliza el componente
 })
 export class AdminGrupoComponent implements OnInit {
-
+ //en este array se deben insertar los servicios que utiliza el componente
   constructor(private adminCurService: AdminCursoService,
     private adminGruService: AdminGrupoService,
     private adminProfService: AdminProfesorService,
     private route: ActivatedRoute, private router: Router) { }
-
+ //en este array se deben insertar los servicios que utiliza el componente
     private profesor: Profesor;
     private institucion: string;//id de la institucion
     private grupos: Array<Grupo>;
@@ -61,9 +62,10 @@ export class AdminGrupoComponent implements OnInit {
                 }
             }
         }
-        
+
     }
 
+//cuando se selecciona curso
     onSelectCurso(c){
       this.selectedCurso = c;
       this.getGrupos();
@@ -81,12 +83,12 @@ export class AdminGrupoComponent implements OnInit {
                 });
         });
     }
-
+//cuando se selecciona un grupo
     onSelectGrupo(g){
         this.selectedGrupo = g;
         this.isavailable = true;
     }
-
+//borra un grupo
     borrarGrupo(){
         this.adminGruService.deleteGrupo(this.selectedGrupo._id)
             .subscribe(

@@ -9,7 +9,7 @@ import { Materia } from '../models/materia';
   selector: 'app-admin-materia',
   templateUrl: './admin-materia.component.html',
   styleUrls: ['./admin-materia.component.css'],
-  providers: [AdminMateriaService, AdminProfesorService]
+  providers: [AdminMateriaService, AdminProfesorService]//servicios necesarios
 })
 export class AdminMateriaComponent implements OnInit {
 
@@ -20,6 +20,7 @@ export class AdminMateriaComponent implements OnInit {
   private isavailable: boolean = false;
   private isavailableNueva: boolean = false;
 
+//constructor inicializa los servicios
   constructor(private adminMatService: AdminMateriaService,
     private adminProfService: AdminProfesorService,
     private route: ActivatedRoute, private router: Router) { }

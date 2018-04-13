@@ -26,7 +26,7 @@ export class AdminProgramaComponent implements OnInit {
   private selectedMateriaAgregar: string;
   private selectedMateriaBorrar: string;
   private materias: Array<Materia>;
-
+//constructor inicializa los servicios
   constructor(private adminProgService: AdminProgramaAcademicoService,
     private adminProfService: AdminProfesorService,
     private adminMatService: AdminMateriaService,
@@ -152,12 +152,14 @@ export class AdminProgramaComponent implements OnInit {
   refrescarMaterias(){
     //no tengo idea de como hacer esto
 }
+//agrega un materia a la malla de un programa
   agregarMateria(){
     this.adminProgService.addMateriaProgramaAcademico(this.selectedPrograma._id, this.selectedMateriaAgregar)
     .subscribe(res=>{
       this.refrescarMaterias();
     })
   }
+  //borra una materia de la malla de un programa
   borrarMateria(){
     this.adminProgService.removeMateriaProgramaAcademico(this.selectedPrograma._id, this.selectedMateriaBorrar)
     .subscribe()

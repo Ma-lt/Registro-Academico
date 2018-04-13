@@ -28,15 +28,15 @@ function getEscuelaID(Nombre, Institucion) {
 //metodo para buscar todas las escuelas de una institucion
 module.exports.buscarTodasEscuelas = function(req,res){
   if(req.params && req.params.institucion){
-    escuela
+    escuela//busca escuelas de una institucion
       .find({
         "institucion": req.params.institucion
       })
       .exec(function(err, escuelas){
-  				if(!escuelas){
+  				if(!escuelas){//si no retorna ninguna escuela
   					sendJsonResponse(res, 404,{"message": "Escuelas no encontradas"});
   					return
-  				} else if (err){
+  				} else if (err){//si hay errores
   					sendJsonResponse(res,404, err);
   					return;
   				}
@@ -53,7 +53,7 @@ module.exports.buscarUnaEscuelaId = function(req, res){
     //tiene parametos y id
     //busca una escuela con ese id
     escuela
-      .findById(req.params.id)
+      .findById(req.params.id)//busca la escuela por id
 			.populate('institucion')
       .exec(function(err, escuelaRes){
         if(!escuelaRes){//si no existe, no lo encontró
@@ -82,6 +82,7 @@ module.exports.insertarUnaEscuela = function(req, res) {
   //le asigna nombre sin ningun cambio
   newEscuela.nombre = req.body.nombre;
   newEscuela.institucion = req.body.institucion;
+	//salva la nueva escuela
   newEscuela.save(function(err, escuela){
     if (err) {
       console.log('Error insertando escuela \n' + err);

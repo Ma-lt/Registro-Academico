@@ -9,10 +9,10 @@ import { Institucion } from '../models/institucion';
   selector: 'app-admin-institucion',
   templateUrl: './admin-institucion.component.html',
   styleUrls: ['./admin-institucion.component.css'],
-  providers: [AdminInstitucionService, AdminProfesorService]
+  providers: [AdminInstitucionService, AdminProfesorService]//servicos necesarios
 })
 export class AdminInstitucionComponent implements OnInit {
-
+//constructor inicializa servicios
   constructor(private adminInsService: AdminInstitucionService,
     private adminProfService: AdminProfesorService,
     private route: ActivatedRoute, private router: Router) { }
