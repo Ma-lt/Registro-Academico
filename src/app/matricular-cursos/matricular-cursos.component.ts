@@ -26,7 +26,7 @@ import { Grupo } from '../models/grupo';
     AdminCursoService] //en este array se deben insertar los servicios que utiliza el componente
 })
 export class MatricularCursosComponent implements OnInit {
-
+//constructor inicializa los servicios
   constructor(private router: Router, private route: ActivatedRoute,
     private adminCurService: AdminCursoService,
     private adminEstService: AdminEstudianteService,
@@ -34,7 +34,7 @@ export class MatricularCursosComponent implements OnInit {
     private adminEscService: AdminEscuelaService,
     private adminGrupService: AdminGrupoService,
     private adminProgService: AdminProgramaAcademicoService) { } //aqui se hace la inyeccion del servicio
-
+//variables necesarias del html
     private estudiante: Estudiante;
     private cursos: Array<Curso>;
     private grupos: Array<Grupo>;

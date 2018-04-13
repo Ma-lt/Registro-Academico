@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 }
 )
 export class LoginComponent implements OnInit {
-
+//constructor inicializa los servicios necesarios
     constructor(private router: Router,
       private adminProfService: AdminProfesorService,
       private adminEstService: AdminEstudianteService,
@@ -37,13 +37,13 @@ export class LoginComponent implements OnInit {
   private escuelas: Array<Escuela>;
   private programasAcademicos: Array<ProgramaAcademico>;
   private idInstitucion: string;
-
+//metodo inicial
   ngOnInit() {
   }
 
   //todas estas funciones se llaman desde la parte HTML del componente
   //el subscribe es completamente necesario
-
+//cuando se registra un estudiante
   onSubmitRegistroEstudiante(estudiante: Estudiante){
     /*llama el metodo addEstudiante del serivicio
      * pasandole el estudiante que obtiene desde
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     this.adminEstService.addEstudiante(estudiante)
     .subscribe();
   }
-
+//cuando se registra un profesor
   onSubmitRegistroProfesor(profesor: Profesor){
     /*llama el metodo addProfesor del serivicio
      * pasandole el profesor que obtiene desde
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
      this.adminProfService.addProfesor(profesor)
      .subscribe();
   }
-
+//se registra una nueva institucion
   nuevaInstitucion(institucion: string){
     this.adminInsService.addInstitucion(institucion)
     .subscribe(
@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
     );
 
   }
+  //se registra una nueva escuela
   nuevaEscuela(institucion:string, escuela: string){
     this.adminEscService.addEscuela(escuela, institucion)
     .subscribe(
@@ -80,25 +81,26 @@ export class LoginComponent implements OnInit {
     );
   }
 
+//refresca la lista de instituciones
   getInstituciones(event){
       this.adminInsService.getInstituciones().subscribe(data => this.instituciones = data); //mapea los datos recibidos a la lista de instituciones
   }
-
+//refresca lista de escuelas
   getEscuelas(id:string){
       this.adminEscService.getEscuelas(id).subscribe(data => this.escuelas = data); //mapea los datos recibidos a la lista de escuelas
   }
-
+//cuando selecciona una institucion
   onSelectInstitucion(id: string){
       this.idInstitucion = id;
       this.getEscuelas(id);
   }
-
+//cuando selecciona una escuela
   onSelectEscuela(idEscuela: string){
       this.adminProgService.getProgramasAcademicos(this.idInstitucion, idEscuela).subscribe(data=> {
         this.programasAcademicos = data
       }); //mapea los datos recibidos a la lista de programas
   }
-
+//cuando se hace el login
   onSubmitLogin(usuario){
       let radios = document.getElementsByName('tipo') as NodeListOf<HTMLInputElement>;
 

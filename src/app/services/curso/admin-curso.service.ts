@@ -54,10 +54,12 @@ export class AdminCursoService {
       curso, httpOptions);
   }
 
+  //agregar un grupo al curso
   agregarGrupo(cursoId, grupoId){
       return this.http.put<Curso>(this.putCursoURL + cursoId + '/' + grupoId, httpOptions);
   }
 
+  //eliminar un grupo del curso
   eliminarGrupo(cursoId, grupoId){
       console.log(cursoId);
       console.log(grupoId);

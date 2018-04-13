@@ -13,22 +13,21 @@ import { AdminProfesorService } from '../services/profesor/admin-profesor.servic
   styleUrls: ['./edit-profesor.component.css'],
   providers: [AdminProfesorService,
     AdminInstitucionService,
-    AdminEscuelaService,]
+    AdminEscuelaService,]//servicios necesarios
 })
 export class EditProfesorComponent implements OnInit {
-
+//variables necesrias del html
 	private profesor: Profesor;
 	private instituciones: Array<Institucion>;
     private escuelas: Array<Escuela>;
     private idInstitucion: string;
 	private idEscuela: string;
-
-
+//constructos inicializa los servicios
   constructor(private adminProfService: AdminProfesorService,
     private adminInsService: AdminInstitucionService,
     private adminEscService: AdminEscuelaService,
     private route: ActivatedRoute, private router: Router) { }
-
+//metodo inicial
   ngOnInit() {
   	    let usr = this.route.snapshot.parent.paramMap.get('usr');
     this.adminProfService.getProfesor(usr).subscribe(
@@ -37,7 +36,7 @@ export class EditProfesorComponent implements OnInit {
         this.getInstituciones(null)
       });
   }
-
+//modifica un profesor
     onSubmitModificarProfesor(profesor: Profesor){
     if(profesor.nombre == "")
       profesor.nombre = this.profesor.nombre;
@@ -58,20 +57,20 @@ export class EditProfesorComponent implements OnInit {
     this.adminProfService.modifyProfesor(this.profesor._id, profesor)
     .subscribe()
   }
-
+//refresca la lista de instituciones
   getInstituciones(event){
       this.adminInsService.getInstituciones().subscribe(data => this.instituciones = data); //mapea los datos recibidos a la lista de instituciones
   }
-
+//refresca la lista de escuelas
   getEscuelas(id:string){
       this.adminEscService.getEscuelas(id).subscribe(data => this.escuelas = data); //mapea los datos recibidos a la lista de escuelas
   }
-
+//cuando selecciona una institucion
   onSelectInstitucion(id: string){
       this.idInstitucion = id;
       this.getEscuelas(id);
   }
-
+//cuando selecciona una escuela
   onSelectEscuela(id: string){
   	this.idEscuela = id;
   }

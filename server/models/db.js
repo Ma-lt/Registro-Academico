@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+
+//incluye todos los modelos necesarios
 require('./conversacion');
 require('./curso');
 require('./escuela');
@@ -10,9 +12,10 @@ require('./materia');
 require('./profesor');
 require('./programaAcademico');
 
-const dbURI = 'mongodb://localhost/SRA';
+const dbURI = 'mongodb://localhost/SRA';//base de datos que usa
 mongoose.Promise = global.Promise;
 
+//conecta el servidor
 mongoose.connect(dbURI, function(err){
 	if(err){
 		console.error("Error!" + err);

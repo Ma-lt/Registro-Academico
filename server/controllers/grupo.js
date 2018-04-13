@@ -167,6 +167,7 @@ module.exports.modificarUnGrupoId = function(req, res){
   }
 }
 
+//matricular estudiantes en un grupo
 module.exports.matricularEstudiante = function(req, res){
 	if(req.params && req.params.id){
 		grupo

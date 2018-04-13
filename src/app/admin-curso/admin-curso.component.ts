@@ -11,15 +11,17 @@ import { Materia } from '../models/materia';
   selector: 'app-admin-curso',
   templateUrl: './admin-curso.component.html',
   styleUrls: ['./admin-curso.component.css'],
-  providers: [AdminCursoService, AdminProfesorService, AdminMateriaService]
+  providers: [AdminCursoService, AdminProfesorService, AdminMateriaService]//servicios que utiliza
 })
 export class AdminCursoComponent implements OnInit {
 
+//constructor inicializa todos los servicios
   constructor(private adminCurService: AdminCursoService,
     private adminProfService: AdminProfesorService,
     private adminMatService: AdminMateriaService,
     private route: ActivatedRoute, private router: Router) { }
 
+    //definicion de todas las variables de html
     private profesor: Profesor;
     private institucion: string;//id de la institucion
     private cursos: Array<Curso>;
@@ -126,7 +128,7 @@ export class AdminCursoComponent implements OnInit {
         curso.anho = this.selectedAnhoStr;
       if (curso.semestre == "")
         curso.semestre = this.selectedSemestreStr;
-      
+
       this.adminCurService.modifyCurso(this.selectedCurso._id, curso)
       .subscribe(
         res =>{

@@ -20,7 +20,7 @@ import { Estudiante } from '../models/estudiante';
     AdminProgramaAcademicoService] //en este array se deben insertar los servicios que utiliza el componente
 })
 export class AdminEstudianteComponent implements OnInit {
-
+  //constructor inicializa todos los servicios
   constructor(private router: Router, private route: ActivatedRoute,
     private adminEstService: AdminEstudianteService,
     private adminInsService: AdminInstitucionService,
@@ -34,6 +34,7 @@ export class AdminEstudianteComponent implements OnInit {
     private idInstitucion: string;
     private estudiante: Estudiante;
 
+    //metodo inicial
   ngOnInit() {
     let usr = this.route.snapshot.parent.paramMap.get('usr');
     this.adminEstService.getEstudiante(usr).subscribe(
@@ -43,6 +44,7 @@ export class AdminEstudianteComponent implements OnInit {
       })
   }
 
+  //cuando se modifica un estudiante
   onSubmitModificarEstudiante(estudiante: Estudiante){
     if(estudiante.nombre == "")
       estudiante.nombre = this.estudiante.nombre;
@@ -64,19 +66,22 @@ export class AdminEstudianteComponent implements OnInit {
     .subscribe()
   }
 
+//refesca la lista de instituciones
   getInstituciones(event){
       this.adminInsService.getInstituciones().subscribe(data => this.instituciones = data); //mapea los datos recibidos a la lista de instituciones
   }
 
+//refresca la lista de escuelas
   getEscuelas(id:string){
       this.adminEscService.getEscuelas(id).subscribe(data => this.escuelas = data); //mapea los datos recibidos a la lista de escuelas
   }
 
+//cuando selecciona una institucion
   onSelectInstitucion(id: string){
       this.idInstitucion = id;
       this.getEscuelas(id);
   }
-
+//cuando selecciona una escuela
   onSelectEscuela(idEscuela: string){
       this.adminProgService.getProgramasAcademicos(this.idInstitucion, idEscuela).subscribe(data=> {
         this.programasAcademicos = data
