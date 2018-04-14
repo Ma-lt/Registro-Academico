@@ -1,3 +1,5 @@
-<p>
-  cursos-matriculados works!
+<div class="w3-card">
+<p *ngFor="let c of cursosMatriculados">
+{{c?.materia.nombre}} Sem {{c?.semestre}} Año {{c?.anho}}
 </p>
+</div>
